@@ -1,6 +1,7 @@
 import { Brick } from "./brick";
+import { BrickSDK } from "./brickSDK";
 
-export { Brick }
+export { Brick, BrickSDK }
 
 // const callback = async change => console.log({ change })
 
