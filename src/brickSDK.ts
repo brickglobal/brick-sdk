@@ -164,8 +164,8 @@ class BrickSDK {
         try {
             if (!username) throw new Error(ErrorCode.PARAM_MISSING)
             if (!usernameRegex.test(username)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.creatSub, { username }) as SubAccount
-            return res
+            let res = await this.GetData(MethodType.creatSub, { username }) as { sdk_sub_account_create: SubAccount }
+            return res.sdk_sub_account_create
         } catch (e) {
             throw e
         }
@@ -188,8 +188,8 @@ class BrickSDK {
             if (!(typeof amount === `number`) || !(amount > 0)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!AssetType.includes(asset)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!ActionType.includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.debitSub, { username, amount, asset, action }) as Transaction
-            return res
+            let res = await this.GetData(MethodType.debitSub, { username, amount, asset, action }) as {sdk_sub_account_debit:Transaction}
+            return res.sdk_sub_account_debit
         } catch (e) {
             throw e
         }
@@ -212,8 +212,8 @@ class BrickSDK {
             if (!(typeof amount === `number`) || !(amount > 0)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!AssetType.includes(asset)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!ActionType.includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.creditSub, { username, amount, asset, action }) as Transaction
-            return res
+            let res = await this.GetData(MethodType.creditSub, { username, amount, asset, action }) as {sdk_sub_account_credit:Transaction}
+            return res.sdk_sub_account_credit
         } catch (e) {
             throw e
         }
