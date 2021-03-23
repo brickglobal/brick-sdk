@@ -70,11 +70,13 @@ class BrickSDK {
 
     private async GetData(type, params: any) {
         try {
+            let methodName: string = ``
             let query: string = ``
             switch (type) {
                 case MethodType.creatSub:
+                    methodName = `sdk_sub_account_create`
                     query = `mutation {
-                        sdk_sub_account_create(username:"${params.username}"){
+                        ${methodName}(username:"${params.username}"){
                             username
                             slug
                             type
@@ -104,9 +106,10 @@ class BrickSDK {
                       }}`
                     break;
                 case MethodType.creditSub:
+                    methodName = `sdk_sub_account_credit`
                     query = `
                     mutation{
-                        sdk_sub_account_credit(uuid:"${uuidv4()}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
+                        ${methodName}(uuid:"${uuidv4()}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
                             uuid
                             sender
                             receiver
@@ -119,10 +122,10 @@ class BrickSDK {
                     }`
                     break;
                 case MethodType.debitSub:
-
+                    methodName = `sdk_sub_account_debit`
                     query = `
                         mutation{
-                            sdk_sub_account_debit(uuid:"${uuidv4()}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
+                            ${methodName}(uuid:"${uuidv4()}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
                                 uuid
                                 sender
                                 receiver
@@ -150,7 +153,7 @@ class BrickSDK {
             if (data.errors) {
                 throw data.errors[0]
             }
-            return data.data
+            return data.data[methodName]
         } catch (e) {
             throw new Error(e.message)
         }
@@ -164,8 +167,8 @@ class BrickSDK {
         try {
             if (!username) throw new Error(ErrorCode.PARAM_MISSING)
             if (!usernameRegex.test(username)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.creatSub, { username }) as { sdk_sub_account_create: SubAccount }
-            return res.sdk_sub_account_create
+            let res = await this.GetData(MethodType.creatSub, { username }) as SubAccount
+            return res
         } catch (e) {
             throw e
         }
@@ -188,8 +191,8 @@ class BrickSDK {
             if (!(typeof amount === `number`) || !(amount > 0)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!AssetType.includes(asset)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!ActionType.includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.debitSub, { username, amount, asset, action }) as {sdk_sub_account_debit:Transaction}
-            return res.sdk_sub_account_debit
+            let res = await this.GetData(MethodType.debitSub, { username, amount, asset, action }) as Transaction
+            return res
         } catch (e) {
             throw e
         }
@@ -212,8 +215,8 @@ class BrickSDK {
             if (!(typeof amount === `number`) || !(amount > 0)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!AssetType.includes(asset)) throw new Error(ErrorCode.PARAM_INVALID)
             if (!ActionType.includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.creditSub, { username, amount, asset, action }) as {sdk_sub_account_credit:Transaction}
-            return res.sdk_sub_account_credit
+            let res = await this.GetData(MethodType.creditSub, { username, amount, asset, action }) as Transaction
+            return res
         } catch (e) {
             throw e
         }

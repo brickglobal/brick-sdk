@@ -16,11 +16,12 @@ import { BrickSDK } from "../src/brickSDK";
 
 const brickInstance = new BrickSDK({ apiKey: "C2HK0Z7-N0Z4P1P-MYM6W1H-QYQNMJG", provider: "http://192.168.1.250:8888/" })
 const test = async () => {
-    // const createRes = await brickInstance.createSubAcc("hoan004")
-    // console.log({ createRes })
-    const creditRes = await brickInstance.creditSubAcc("hoan004", 100000000, "eur", "bonus")
+    const username = 'hoan005'
+    const createRes = await brickInstance.createSubAcc(username)
+    console.log({ createRes })
+    const creditRes = await brickInstance.creditSubAcc(username, 100000000, "eur", "bonus")
     console.log({ creditRes })
-    const debitRes = await brickInstance.debitSubAcc("hoan004", 50000000, "eur", "bonus")
+    const debitRes = await brickInstance.debitSubAcc(username, 50000000, "eur", "bonus")
     console.log({ debitRes })
 }
 
