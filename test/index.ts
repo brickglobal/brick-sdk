@@ -1,17 +1,31 @@
-import { Brick } from "../src/brick";
+// import { Brick } from "../src/brick";
 
-const callback = async change => console.log({ change })
+// const callback = async change => console.log({ change })
 
-const robusta = new Brick({
-    apiKey: 'BZ7QM6E-CQP4QY5-GWQ8K7E-1B1ACYW',
-    provider: '51.79.176.223:8600'
-})
+// const robusta = new Brick({
+//     apiKey: 'BZ7QM6E-CQP4QY5-GWQ8K7E-1B1ACYW',
+//     provider: '51.79.176.223:8600'
+// })
 
-robusta.consume({
-    brokers: ['51.79.176.223:9193'],
-    callback
-})
+// robusta.consume({
+//     brokers: ['51.79.176.223:9193'],
+//     callback
+// })
 
+import { BrickSDK } from "../src/brickSDK";
+
+const brickInstance = new BrickSDK({ apiKey: "C2HK0Z7-N0Z4P1P-MYM6W1H-QYQNMJG", provider: "http://192.168.1.250:8888/" })
+const test = async () => {
+    const username = 'hoan005'
+    const createRes = await brickInstance.createSubAcc(username)
+    console.log({ createRes })
+    const creditRes = await brickInstance.creditSubAcc(username, 100000000, "eur", "bonus")
+    console.log({ creditRes })
+    const debitRes = await brickInstance.debitSubAcc(username, 50000000, "eur", "bonus")
+    console.log({ debitRes })
+}
+
+test()
 // robusta.connect()
 //     .then(() => console.log('connected'))
 //     .catch(err => console.error(err)) 
