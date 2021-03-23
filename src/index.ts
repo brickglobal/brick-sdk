@@ -1,6 +1,7 @@
-import { Robusta } from "./brick";
+import { Brick } from "./brick";
+import { BrickSDK } from "./brickSDK";
 
-export { Robusta }
+export { Brick, BrickSDK }
 
 // const callback = async change => console.log({ change })
 
