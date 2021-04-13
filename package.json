@@ -1,6 +1,6 @@
 {
   "name": "@brickglobal/brick-sdk",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -25,19 +25,13 @@
   },
   "homepage": "https://github.com/brickglobal/brick-sdk#readme",
   "devDependencies": {
-    "@types/bitcoinjs-lib": "^5.0.0",
     "@types/node": "^14.14.7",
     "nodemon": "^2.0.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
   },
   "dependencies": {
-    "@grpc/proto-loader": "^0.5.5",
     "axios": "^0.21.1",
-    "bitcoinjs-lib": "^5.2.0",
-    "grpc": "^1.24.4",
-    "kafkajs": "^1.14.0",
-    "tronweb": "^3.1.0",
     "uuid": "^8.3.2"
   },
   "description": "The Brick SDK for NodeJS",
