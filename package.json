@@ -1,6 +1,6 @@
 {
-  "name": "brick-sdk",
-  "version": "1.0.0",
+  "name": "@brickglobal/brick-sdk",
+  "version": "1.0.6",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -40,5 +40,8 @@
     "tronweb": "^3.1.0",
     "uuid": "^8.3.2"
   },
-  "description": "The Brick SDK for NodeJS"
+  "description": "The Brick SDK for NodeJS",
+  "directories": {
+    "test": "test"
+  }
 }
