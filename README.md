@@ -2,8 +2,8 @@
 
 A JavaScript SDK for interact with Brick Master server
 
-[![npm version](https://img.shields.io/npm/v/brickSDK.js.svg)](https://www.npmjs.com/package/brickSDK.js)
-[![npm downloads](https://img.shields.io/npm/dw/brickSDK.js)](https://www.npmjs.com/package/brickSDK.js)
+[![npm version](https://img.shields.io/npm/v/@brickglobal/brick-sdk?style=plastic)](https://www.npmjs.com/package/@brickglobal/brick-sdk)
+[![npm downloads](https://img.shields.io/npm/dw/@brickglobal/brick-sdk?style=plastic)](https://www.npmjs.com/package/@brickglobal/brick-sdk)
 
 ## Features
 
