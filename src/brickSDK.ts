@@ -1,20 +1,54 @@
-import { v4 as uuidv4 } from 'uuid';
-import axios from "axios";
+
 import { usernameRegex } from "./utils";
 
-export const ErrorCode = {
-    PARAM_INVALID: `PARAM_INVALID`,
-    PARAM_MISSING: `PARAM_MISSING`
+import axios from "axios";
+import { creatSub } from "./methods/method.creatSub";
+import { debitSub } from "./methods/method.debitSub";
+import { creditSub } from "./methods/method.creditSub";
+import { requestWithdrawSub } from "./methods/method.requestWithdrawSub";
+import { transactionsGet } from "./methods/method.transactionsGet";
+
+export const BMErrorCode = {
+    PARAM_INVALID: `BM:PARAM_INVALID`,
+    PARAM_MISSING: `BM:PARAM_MISSING`,
+    API_KEY_MISSING: `BM:API_KEY_MISSING`,
+    PROVIDER_MISSING: `BM:PROVIDER_MISSING`
 }
 
-const MethodType = {
+const BMMethodType = {
     creatSub: `createSub`,
     debitSub: `debitSub`,
     creditSub: `creditSub`,
+    requestWithdrawSub: `requestWithdrawSub`,
+    transactionsGet: `transactionsGet`
+}
+
+export const BMMethodName = {
+    creatSub: `sdk_sub_account_create`,
+    debitSub: `sdk_sub_account_debit`,
+    creditSub: `sdk_sub_account_credit`,
+    requestWithdrawSub: `sdk_sub_account_request_withdraw`,
+    transactionsGet: `master_main_transactions_get`
+}
+
+export const BMMethodFUnc = {
+    creatSub,
+    debitSub,
+    creditSub,
+    requestWithdrawSub,
+    transactionsGet
 }
 
 const AssetType = ['usdt_trc20', 'trx', 'eur']
-const ActionType = ['bonus']
+export const ActionType = {
+    bonus: 'bonus',
+    debit: 'debit',
+    credit: 'credit',
+    transfer: 'transfer',
+    convert: 'convert',
+    withdraw: 'withdraw',
+    deposit: 'deposit'
+}
 
 export type Asset = {
     balance: number
@@ -44,14 +78,59 @@ export type SubAccount = {
     withdraw: AllSubCashier
 }
 
+export enum TransactionSystem {
+    internal = 'internal',
+    external = 'external',
+}
+export enum TransactionStatus {
+    sent = 'sent',
+    completed = 'completed'
+}
+export enum TransactionType {
+    debit = 'debit',
+    credit = 'credit',
+    deposit = 'deposit',
+    withdraw = 'withdraw'
+}
+
+export type InternalAccount = {
+    _id: string
+    slug: string
+}
+
+export type ExternalAccount = {
+    address: string
+}
+
+export type InternalTxData = {
+    sender: InternalAccount
+    receiver: InternalAccount
+}
+
+export type ExternalDepositTxData = {
+    sender: ExternalAccount
+    receiver: InternalAccount
+}
+
+export type ExternalWithdrawTxData = {
+    sender: InternalAccount
+    receiver: ExternalAccount
+}
+
+export type TransactionData = InternalTxData | ExternalDepositTxData | ExternalWithdrawTxData
+
 export type Transaction = {
+    _id?: string
     uuid: string
-    sender: string
-    receiver: string
+    system: TransactionSystem
+    type: TransactionType
+    status: TransactionStatus
     amount: number
     asset: string
     action: string
-    extra: string
+    data: TransactionData
+    txid: string
+    updatedAt: Date
     createdAt: Date
 }
 
@@ -61,8 +140,8 @@ class BrickSDK {
     private _provider: string
 
     constructor(params: { apiKey: string, provider: string }) {
-        if (!params.apiKey) throw new Error(ErrorCode.PARAM_MISSING)
-        if (!params.provider) throw new Error(ErrorCode.PARAM_MISSING)
+        if (!params.apiKey) throw new Error(BMErrorCode.API_KEY_MISSING)
+        if (!params.provider) throw new Error(BMErrorCode.PROVIDER_MISSING)
 
         this._apiKey = params.apiKey
         this._provider = params.provider
@@ -73,70 +152,25 @@ class BrickSDK {
             let methodName: string = ``
             let query: string = ``
             switch (type) {
-                case MethodType.creatSub:
-                    methodName = `sdk_sub_account_create`
-                    query = `mutation {
-                        ${methodName}(username:"${params.username}"){
-                            username
-                            slug
-                            type
-                            main
-                            lock
-                            asset{
-                            eur
-                            trx{
-                                balance
-                                address
-                            }
-                            usdt_trc20{
-                                balance
-                                address
-                            }
-                            }
-                            deposit{
-                            eur
-                            trx
-                            usdt_trc20
-                            }
-                            withdraw{
-                            eur
-                            trx
-                            usdt_trc20
-                            }
-                      }}`
+                case BMMethodType.creatSub:
+                    methodName = BMMethodFUnc.creatSub(params).name
+                    query = BMMethodFUnc.creatSub(params).query
                     break;
-                case MethodType.creditSub:
-                    methodName = `sdk_sub_account_credit`
-                    query = `
-                    mutation{
-                        ${methodName}(uuid:"${uuidv4()}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
-                            uuid
-                            sender
-                            receiver
-                            amount
-                            asset
-                            action
-                            extra
-                            createdAt
-                          }
-                    }`
+                case BMMethodType.creditSub:
+                    methodName = BMMethodFUnc.creditSub(params).name
+                    query = BMMethodFUnc.creditSub(params).query
                     break;
-                case MethodType.debitSub:
-                    methodName = `sdk_sub_account_debit`
-                    query = `
-                        mutation{
-                            ${methodName}(uuid:"${uuidv4()}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
-                                uuid
-                                sender
-                                receiver
-                                amount
-                                asset
-                                action
-                                extra
-                                createdAt
-                              }
-                        }`
-
+                case BMMethodType.debitSub:
+                    methodName = BMMethodFUnc.debitSub(params).name
+                    query = BMMethodFUnc.debitSub(params).query
+                    break;
+                case BMMethodType.requestWithdrawSub:
+                    methodName = BMMethodFUnc.requestWithdrawSub(params).name
+                    query = BMMethodFUnc.requestWithdrawSub(params).query
+                    break;
+                case BMMethodType.transactionsGet:
+                    methodName = BMMethodFUnc.transactionsGet(params).name
+                    query = BMMethodFUnc.transactionsGet(params).query
                     break;
                 default:
                     break;
@@ -165,9 +199,9 @@ class BrickSDK {
      */
     public async createSubAcc(username: string): Promise<SubAccount> {
         try {
-            if (!username) throw new Error(ErrorCode.PARAM_MISSING)
-            if (!usernameRegex.test(username)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.creatSub, { username }) as SubAccount
+            if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
+            if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
+            let res = await this.GetData(BMMethodType.creatSub, { username }) as SubAccount
             return res
         } catch (e) {
             throw e
@@ -182,16 +216,15 @@ class BrickSDK {
      * @param action 
      * @returns Transaction Type 
      */
-    public async debitSubAcc(username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus'): Promise<Transaction> {
+    public async debitSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'convert' | 'transfer'): Promise<Transaction> {
         try {
-            if (!username) throw new Error(ErrorCode.PARAM_MISSING)
-            if (!amount) throw new Error(ErrorCode.PARAM_MISSING)
-            if (!asset) throw new Error(ErrorCode.PARAM_MISSING)
-            if (!usernameRegex.test(username)) throw new Error(ErrorCode.PARAM_INVALID)
-            if (!(typeof amount === `number`) || !(amount > 0)) throw new Error(ErrorCode.PARAM_INVALID)
-            if (!AssetType.includes(asset)) throw new Error(ErrorCode.PARAM_INVALID)
-            if (!ActionType.includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.debitSub, { username, amount, asset, action }) as Transaction
+            if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
+            if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
+            if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
+            if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
+            if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
+            // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
+            let res = await this.GetData(BMMethodType.debitSub, { uuid, username, amount, asset, action }) as Transaction
             return res
         } catch (e) {
             throw e
@@ -206,16 +239,47 @@ class BrickSDK {
      * @param action 
      * @returns Transaction Type 
      */
-    public async creditSubAcc(username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus'): Promise<Transaction> {
+    public async creditSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'transfer' | 'convert'): Promise<Transaction> {
         try {
-            if (!username) throw new Error(ErrorCode.PARAM_MISSING)
-            if (!amount) throw new Error(ErrorCode.PARAM_MISSING)
-            if (!asset) throw new Error(ErrorCode.PARAM_MISSING)
-            if (!usernameRegex.test(username)) throw new Error(ErrorCode.PARAM_INVALID)
-            if (!(typeof amount === `number`) || !(amount > 0)) throw new Error(ErrorCode.PARAM_INVALID)
-            if (!AssetType.includes(asset)) throw new Error(ErrorCode.PARAM_INVALID)
-            if (!ActionType.includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(MethodType.creditSub, { username, amount, asset, action }) as Transaction
+            if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
+            if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
+            if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
+            if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
+            if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
+            // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
+            let res = await this.GetData(BMMethodType.creditSub, { uuid, username, amount, asset, action }) as Transaction
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+
+    /**
+     * Using for deposit asset in the Sub Account
+     * @param username the name of Sub Account 
+     * @param amount amount of withdraw (multiple with 1.10^6)
+     * @param asset type of asset that Brick support
+     * @param action 
+     * @returns Transaction Type 
+     */
+    public async SubAccRequestWithDraw(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', receiver: string): Promise<Transaction> {
+        try {
+            if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
+            if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
+            if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
+            if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
+            if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
+            let res = await this.GetData(BMMethodType.requestWithdrawSub, { uuid, username, amount, asset, receiver }) as Transaction
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+
+    public async TransactionsGet(pageNumber: number, pageSize: Number): Promise<Transaction[]> {
+        try {
+            if (pageNumber < 0 || pageSize < 1 || pageSize > 1000) throw new Error(BMErrorCode.PARAM_INVALID)
+            let res = await this.GetData(BMMethodType.transactionsGet, { pageNumber, pageSize }) as Transaction[]
             return res
         } catch (e) {
             throw e

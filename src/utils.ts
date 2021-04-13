@@ -1,1 +1,1 @@
-export const usernameRegex = /^[a-zA-Z0-9]{5,16}$/
+export const usernameRegex = /^[a-zA-Z0-9]{4,16}$/
