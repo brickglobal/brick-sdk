@@ -254,18 +254,20 @@ There are two type of error that will be response
 * Server response error
 
 __SDK error__
-`API_KEY_MISSING`: missing API key when instantiate BrickSDK
-`PROVIDER_MISSING`: missing Provider when instantiate BrickSDK
-`PARAM_INVALID`: param not correct type or not support
-`PARAM_MISSING`: some param is missing
+* `API_KEY_MISSING`: missing API key when instantiate BrickSDK
+* `PROVIDER_MISSING`: missing Provider when instantiate BrickSDK
+* `PARAM_INVALID`: param not correct type or not support
+* `PARAM_MISSING`: some param is missing
 
 __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+__1.0.10__
+* update `README`
 __1.0.9__
-remove some too old package
+* remove some too old package
 __1.0.8__
-update `README`
+* update `README`
 __1.0.7__
-first time deploy to npm
+* first time deploy to npm
