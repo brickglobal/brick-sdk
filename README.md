@@ -263,5 +263,7 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+__1.0.8__
+update README
 __1.0.7__
-first time deloy to npm
+first time deploy to npm
