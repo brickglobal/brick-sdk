@@ -2,15 +2,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { BrickSDK } from "../src/brickSDK";
 
-const brickInstance = new BrickSDK({ apiKey: "YCN35WM-M6SMSB1-NVBBQJN-SYXFG63", provider: "http://139.99.210.62:8888/" })
-// (async () => {
-//     const username = 'hoansub02'
+const brickInstance = new BrickSDK({ apiKey: "EK5R6MF-8VJMSZT-KC519WG-5JK6ZFY", provider: "http://139.99.210.62:8888/" })
 
-//     const creditRes = await brickInstance.creditSubAcc(uuidv4(), username, 100000000, "eur", "bonus")
-//     console.log({ creditRes })
-//     const debitRes = await brickInstance.debitSubAcc(uuidv4(), username, 50000000, "eur", "bonus")
-//     console.log({ debitRes })
-//     const SubAccRequestWithDrawRes = await brickInstance.SubAccRequestWithDraw(uuidv4(), username, 50000000, "eur")
-//     console.log({ SubAccRequestWithDrawRes })
-// })()
+const test = async () => {
+    console.log(await brickInstance.SubAccRequestWithDraw("fakeWithdrawUUID", "testSubAcc", 1000000, 'usdt_trc20', "TJYM3W22TYpvpnAHNgT7UsG6AekJcxTkkU"))
+}
+
+test()
 

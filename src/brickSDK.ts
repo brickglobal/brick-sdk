@@ -9,10 +9,10 @@ import { requestWithdrawSub } from "./methods/method.requestWithdrawSub";
 import { transactionsGet } from "./methods/method.transactionsGet";
 
 export const BMErrorCode = {
-    PARAM_INVALID: `BM:PARAM_INVALID`,
-    PARAM_MISSING: `BM:PARAM_MISSING`,
-    API_KEY_MISSING: `BM:API_KEY_MISSING`,
-    PROVIDER_MISSING: `BM:PROVIDER_MISSING`
+    PARAM_INVALID: `PARAM_INVALID`,
+    PARAM_MISSING: `PARAM_MISSING`,
+    API_KEY_MISSING: `API_KEY_MISSING`,
+    PROVIDER_MISSING: `PROVIDER_MISSING`
 }
 
 const BMMethodType = {
