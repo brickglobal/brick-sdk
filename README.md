@@ -264,6 +264,9 @@ This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
 
+__1.0.13__
+* add more action choices
+
 __1.0.12__
 * export two types: `Transaction` and `SubAccount`
 

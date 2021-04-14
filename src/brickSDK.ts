@@ -47,7 +47,8 @@ export const ActionType = {
     transfer: 'transfer',
     convert: 'convert',
     withdraw: 'withdraw',
-    deposit: 'deposit'
+    deposit: 'deposit',
+    cancel: 'cancel'
 }
 
 export type Asset = {
@@ -216,7 +217,7 @@ class BrickSDK {
      * @param action 
      * @returns Transaction Type 
      */
-    public async debitSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'convert' | 'transfer'): Promise<Transaction> {
+    public async debitSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'convert' | 'transfer' | 'cancel'): Promise<Transaction> {
         try {
             if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
             if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
@@ -239,7 +240,7 @@ class BrickSDK {
      * @param action 
      * @returns Transaction Type 
      */
-    public async creditSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'transfer' | 'convert'): Promise<Transaction> {
+    public async creditSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'transfer' | 'convert' | 'cancel'): Promise<Transaction> {
         try {
             if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
             if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
