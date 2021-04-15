@@ -266,8 +266,8 @@ class BrickSDK {
      */
     public async createSubAcc(username: string): Promise<SubAccount> {
         try {
-            if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
-            if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
+            // if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
+            // if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
             let res = await this.GetData(BMMethodType.creatSub, { username }) as SubAccount
             return res
         } catch (e) {
@@ -285,9 +285,9 @@ class BrickSDK {
      */
     public async debitSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'convert' | 'transfer' | 'cancel'): Promise<Transaction> {
         try {
-            if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
+            // if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
             if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
-            if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
+            // if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
             if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
             if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
