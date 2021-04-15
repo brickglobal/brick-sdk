@@ -10,6 +10,7 @@ export const debitSub = (params: any): { name: string, query: string } => {
                             system
                             type
                             amount
+                            fee
                             asset
                             action
                             updatedAt
