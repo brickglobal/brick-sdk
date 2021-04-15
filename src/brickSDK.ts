@@ -7,6 +7,7 @@ import { debitSub } from "./methods/method.debitSub";
 import { creditSub } from "./methods/method.creditSub";
 import { requestWithdrawSub } from "./methods/method.requestWithdrawSub";
 import { transactionsGet } from "./methods/method.transactionsGet";
+import { getMainAccInfo } from "./methods/method.getMainAccInfo";
 
 export const BMErrorCode = {
     PARAM_INVALID: `PARAM_INVALID`,
@@ -20,15 +21,17 @@ const BMMethodType = {
     debitSub: `debitSub`,
     creditSub: `creditSub`,
     requestWithdrawSub: `requestWithdrawSub`,
-    transactionsGet: `transactionsGet`
+    transactionsGet: `transactionsGet`,
+    getMainAccInfo: `getMainAccInfo`
 }
 
-export const BMMethodName = {
+export const BMApolloMethodName = {
     creatSub: `sdk_sub_account_create`,
     debitSub: `sdk_sub_account_debit`,
     creditSub: `sdk_sub_account_credit`,
     requestWithdrawSub: `sdk_sub_account_request_withdraw`,
-    transactionsGet: `master_main_transactions_get`
+    transactionsGet: `master_main_transactions_get`,
+    getMainAccInfo: `sdk_main_account_get`
 }
 
 export const BMMethodFUnc = {
@@ -36,7 +39,8 @@ export const BMMethodFUnc = {
     debitSub,
     creditSub,
     requestWithdrawSub,
-    transactionsGet
+    transactionsGet,
+    getMainAccInfo,
 }
 
 const AssetType = ['usdt_trc20', 'trx', 'eur']
@@ -134,6 +138,63 @@ export type Transaction = {
     updatedAt: Date
     createdAt: Date
 }
+type MasterFee = {
+    deposit: number
+    withdraw: number
+}
+
+type MainDeposit = {
+    totalDeposit: number
+    mainDeposit: number
+    subsDeposit: number
+}
+
+type MainWithdraw = {
+    totalWithdraw: number
+    mainWithdraw: number
+    subsWithdraw: number
+}
+
+type AllMainDeposit = {
+    trx: MainDeposit
+    usdt_trc20: MainDeposit
+}
+
+type AllMainWithdraw = {
+    trx: MainWithdraw
+    usdt_trc20: MainWithdraw
+}
+
+type FeeVersion1Data = {
+    a: number
+    b: number
+}
+
+type FeeVersion1 = {
+    version: number
+    data: FeeVersion1Data
+}
+
+type MainAccountFee = {
+    deposit: FeeVersion1
+    withdraw: FeeVersion1
+}
+
+export type MainAccount = {
+    username: String
+    slug: String
+    type: String
+    lock: String
+    email: String
+    emailVerifiedAt: Date
+    twoFa: Boolean
+    apiKey: String
+    asset: AllAsset
+    deposit: AllMainDeposit
+    withdraw: AllMainWithdraw
+    fee: MainAccountFee
+    masterFee: MasterFee
+}
 
 class BrickSDK {
 
@@ -172,6 +233,10 @@ class BrickSDK {
                 case BMMethodType.transactionsGet:
                     methodName = BMMethodFUnc.transactionsGet(params).name
                     query = BMMethodFUnc.transactionsGet(params).query
+                    break;
+                case BMMethodType.getMainAccInfo:
+                    methodName = BMMethodFUnc.getMainAccInfo(params).name
+                    query = BMMethodFUnc.getMainAccInfo(params).query
                     break;
                 default:
                     break;
@@ -281,6 +346,15 @@ class BrickSDK {
         try {
             if (pageNumber < 0 || pageSize < 1 || pageSize > 1000) throw new Error(BMErrorCode.PARAM_INVALID)
             let res = await this.GetData(BMMethodType.transactionsGet, { pageNumber, pageSize }) as Transaction[]
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+
+    public async MainAccountInfoGet(): Promise<MainAccount> {
+        try {
+            let res = await this.GetData(BMMethodType.getMainAccInfo, {}) as MainAccount
             return res
         } catch (e) {
             throw e

@@ -1,11 +1,11 @@
-import { BMMethodName } from "../brickSDK"
+import { BMApolloMethodName } from "../brickSDK"
 
 export const creditSub = (params: any): { name: string, query: string } => {
     return {
-        name: BMMethodName.creditSub,
+        name: BMApolloMethodName.creditSub,
         query: `
                     mutation{
-                        ${BMMethodName.creditSub}(uuid:"${params.uuid}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
+                        ${BMApolloMethodName.creditSub}(uuid:"${params.uuid}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
                             uuid
                             system
                             type

@@ -1,10 +1,10 @@
-import { BMMethodName } from "../brickSDK"
+import { BMApolloMethodName } from "../brickSDK"
 
 export const creatSub = (params: { username: string }): { name: string, query: string } => {
     return {
-        name: BMMethodName.creatSub,
+        name: BMApolloMethodName.creatSub,
         query: `mutation {
-            ${BMMethodName.creatSub}(username:"${params.username}"){
+            ${BMApolloMethodName.creatSub}(username:"${params.username}"){
                 username
                 slug
                 type

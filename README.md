@@ -248,6 +248,150 @@ const withdrawRes= await brickSDK.SubAccRequestWithDraw("fakeCreditUUID","testSu
     }
 */
 ```
+####  `MainAccountInfoGet`
+Using to get main account information
+__Params__
+```javascript
+// no prams required
+```
+__Return__
+```javascript
+{
+    username: string
+    slug: string
+    type: string
+    lock: string
+    email: string
+    emailVerifiedAt: Date
+    twoFa: boolean
+    apiKey: string
+    asset: {
+         eur: number
+        trx: {
+            balance: number
+            address: string
+        }
+        usdt_trc20: {
+            balance: number
+            address: string
+        }
+    }
+    deposit: {
+        trx: {
+            totalDeposit: number
+            mainDeposit: number
+            subsDeposit: number
+        }
+        usdt_trc20: {
+            totalDeposit: number
+            mainDeposit: number
+            subsDeposit: number
+        }
+    }
+    withdraw: {
+         trx: {
+            totalWithdraw: number
+            mainWithdraw: number
+            subsWithdraw: number
+        }
+        usdt_trc20: {
+            totalWithdraw: number
+            mainWithdraw: number
+            subsWithdraw: number
+        }
+    }
+    fee: {
+        deposit: {
+            version: number
+            data: {
+                a: number
+                b: number
+            }
+        }
+        withdraw: {
+            version: number
+            data: {
+                a: number
+                b: number
+            }
+        }
+    }
+    masterFee: {
+        deposit: number
+        withdraw: number
+    }
+}
+```
+__Example__
+```javascript
+const getAccInfoRes= await brickSDK.MainAccountInfoGet()
+/*Success return example
+    getAccInfoRes{
+        username: 'testMainAcc',
+        slug: 'testMainAcc',
+        type: 'main',
+        lock: 'none',
+        email: 'testMainAcc@abc.com',
+        emailVerifiedAt: '2021-04-00T00:00:00.000Z',
+        twoFa: true,
+        apiKey: 'ZQEWTH0-PZ348Y0-******-******-',
+        fee: {
+            deposit: { 
+                version: 1, 
+                data: {
+                    a:0,
+                    b:1
+                } 
+            },
+            withdraw: { 
+                version: 1, 
+                data: {
+                    a:1,
+                    b:0
+                } 
+            }
+        },
+        masterFee: { 
+            deposit: 0, 
+            withdraw: 0 
+        },
+        asset: {
+            trx: { 
+                balance: 0, 
+                address: 'TYxAnsw8NL1CDve9EPJ5KL************' 
+            },
+            usdt_trc20: {
+                balance: 0,
+                address: 'TYxAnsw8NL1CDve9EPJ5KL************'
+            }
+        },
+        deposit: {
+            trx: { 
+                totalDeposit: 0, 
+                mainDeposit: 0, 
+                subsDeposit: 0 
+            },
+            usdt_trc20: {
+                totalDeposit: 0,
+                mainDeposit: 0,
+                subsDeposit: 0
+            }
+        },
+        withdraw: {
+            trx: { 
+                totalWithdraw: 0, 
+                mainWithdraw: 0, 
+                subsWithdraw: 0 
+            },
+            usdt_trc20: {
+                totalWithdraw: 0,
+                mainWithdraw: 0,
+                subsWithdraw: 0
+            }
+        }
+    }
+*/
+```
 ## Error 
 There are two type of error that will be response
 * SDK error
@@ -263,6 +407,9 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+
+__1.0.14__
+* add new method `MainAccountInfoGet`
 
 __1.0.13__
 * add more action choices

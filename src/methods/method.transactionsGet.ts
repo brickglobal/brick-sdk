@@ -1,11 +1,11 @@
-import { BMMethodName } from "../brickSDK"
+import { BMApolloMethodName } from "../brickSDK"
 
 export const transactionsGet = (params: any): { name: string, query: string } => {
     return {
-        name: BMMethodName.transactionsGet,
+        name: BMApolloMethodName.transactionsGet,
         query: `
                     query{
-                        ${BMMethodName.transactionsGet}(pageNumber:${params.pageNumber}, pageSize:${params.pageSize}){
+                        ${BMApolloMethodName.transactionsGet}(pageNumber:${params.pageNumber}, pageSize:${params.pageSize}){
                             uuid
                             sender
                             receiver
