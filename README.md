@@ -115,6 +115,7 @@ __Return__
     type: 'debit'|'credit'|'deposit'|'withdraw'
     status: 'sent'|'completed'
     amount: number
+    fee: number
     asset: string
     action: string
     data: {
@@ -135,6 +136,7 @@ const debitRes= await brickSDK.debitSubAcc("fakeDebitUUID","testSubAcc",1000000,
         system: 'internal',
         type: 'debit',
         amount: 1000000,
+        fee:0,
         asset: 'usdt_trc20',
         action: 'debit',
         updatedAt: '2021-04-13T08:59:16.455Z',
@@ -166,6 +168,7 @@ __Return__
     type: 'debit'|'credit'|'deposit'|'withdraw'
     status: 'sent'|'completed'
     amount: number
+    fee:number
     asset: string
     action: string
     data: {
@@ -186,6 +189,7 @@ const creditRes= await brickSDK.creditSubAcc("fakeCreditUUID","testSubAcc",10000
         system: 'internal',
         type: 'credit',
         amount: 1000000,
+        fee:0,
         asset: 'usdt_trc20',
         action: 'credit',
         updatedAt: '2021-04-13T00:00:00.000Z',
@@ -203,7 +207,7 @@ using to request withdraw
 __Params__
 ```javascript
 uuid: string
-usename: string
+username: string
 amount: number
 asset: 'eur'|'trx'|'usdt_trc20'
 receiver: string                        //TRC20 address
@@ -217,6 +221,7 @@ __Return__
     type: 'debit'|'credit'|'deposit'|'withdraw'
     status: 'sent'|'completed'
     amount: number
+    fee:string
     asset: string
     action: string
     data: {
@@ -237,6 +242,7 @@ const withdrawRes= await brickSDK.SubAccRequestWithDraw("fakeCreditUUID","testSu
         system: 'external',
         type: 'withdraw',
         amount: 1000000,
+        fee:0,
         asset: 'usdt_trc20',
         action: 'withdraw',
         updatedAt: '2021-04-13T00:00:00.000Z',
@@ -408,6 +414,9 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+
+__1.1.2__
+* fix some bugs
 
 __1.1.0__
 * add new method `MainAccountInfoGet`

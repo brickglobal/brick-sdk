@@ -137,6 +137,7 @@ export type Transaction = {
     txid: string
     updatedAt: Date
     createdAt: Date
+    fee: number
 }
 type MasterFee = {
     deposit: number
