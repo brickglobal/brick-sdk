@@ -9,6 +9,7 @@ A JavaScript SDK for interact with Brick Master server
 
 - Create sub account 
 - Debit / Credit / RequestWithdraw for sub account
+- Check main account information
 - Support `TRC20`
 
 ## Installation

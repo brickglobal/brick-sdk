@@ -1,3 +1,3 @@
-import { BrickSDK, Transaction, SubAccount } from "./brickSDK";
+import { BrickSDK, Transaction, SubAccount, MainAccount } from "./brickSDK";
 
-export { BrickSDK, Transaction, SubAccount }
+export { BrickSDK, Transaction, SubAccount, MainAccount }
