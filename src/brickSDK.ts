@@ -310,7 +310,7 @@ class BrickSDK {
         try {
             if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
             if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
-            if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
+            // if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
             if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
             if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
