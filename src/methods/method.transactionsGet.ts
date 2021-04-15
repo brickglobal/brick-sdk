@@ -10,6 +10,7 @@ export const transactionsGet = (params: any): { name: string, query: string } =>
                             sender
                             receiver
                             amount
+                            fee
                             asset
                             action
                             depositStatus
