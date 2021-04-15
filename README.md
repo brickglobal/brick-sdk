@@ -408,7 +408,7 @@ This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
 
-__1.0.14__
+__1.1.0__
 * add new method `MainAccountInfoGet`
 
 __1.0.13__
