@@ -8,6 +8,7 @@ import { creditSub } from "./methods/method.creditSub";
 import { requestWithdrawSub } from "./methods/method.requestWithdrawSub";
 import { transactionsGet } from "./methods/method.transactionsGet";
 import { getMainAccInfo } from "./methods/method.getMainAccInfo";
+import {subAccountInfo} from "./methods/method.subAccountInfo"
 
 export const BMErrorCode = {
     PARAM_INVALID: `PARAM_INVALID`,
@@ -22,7 +23,8 @@ const BMMethodType = {
     creditSub: `creditSub`,
     requestWithdrawSub: `requestWithdrawSub`,
     transactionsGet: `transactionsGet`,
-    getMainAccInfo: `getMainAccInfo`
+    getMainAccInfo: `getMainAccInfo`,
+    subAccountInfo: `subAccountInfo`
 }
 
 export const BMApolloMethodName = {
@@ -31,7 +33,8 @@ export const BMApolloMethodName = {
     creditSub: `sdk_sub_account_credit`,
     requestWithdrawSub: `sdk_sub_account_request_withdraw`,
     transactionsGet: `master_main_transactions_get`,
-    getMainAccInfo: `sdk_main_account_get`
+    getMainAccInfo: `sdk_main_account_get`,
+    subAccountInfo: `sdk_sub_account_get`
 }
 
 export const BMMethodFUnc = {
@@ -41,6 +44,7 @@ export const BMMethodFUnc = {
     requestWithdrawSub,
     transactionsGet,
     getMainAccInfo,
+    subAccountInfo
 }
 
 const AssetType = ['usdt_trc20', 'trx', 'eur']
@@ -239,6 +243,10 @@ class BrickSDK {
                     methodName = BMMethodFUnc.getMainAccInfo(params).name
                     query = BMMethodFUnc.getMainAccInfo(params).query
                     break;
+                case BMMethodType.subAccountInfo:
+                    methodName = BMMethodFUnc.subAccountInfo(params).name
+                    query = BMMethodFUnc.subAccountInfo(params).query
+                    break;
                 default:
                     break;
             }
@@ -345,7 +353,7 @@ class BrickSDK {
 
     public async TransactionsGet(pageNumber: number, pageSize: Number): Promise<Transaction[]> {
         try {
-            if (pageNumber < 0 || pageSize < 1 || pageSize > 1000) throw new Error(BMErrorCode.PARAM_INVALID)
+            // if (pageNumber < 0 || pageSize < 1 || pageSize > 1000) throw new Error(BMErrorCode.PARAM_INVALID)
             let res = await this.GetData(BMMethodType.transactionsGet, { pageNumber, pageSize }) as Transaction[]
             return res
         } catch (e) {
@@ -356,6 +364,15 @@ class BrickSDK {
     public async MainAccountInfoGet(): Promise<MainAccount> {
         try {
             let res = await this.GetData(BMMethodType.getMainAccInfo, {}) as MainAccount
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+
+    public async subAccountInfoGet(username: String): Promise<SubAccount> {
+        try {
+            let res = await this.GetData(BMMethodType.subAccountInfo, { username }) as SubAccount
             return res
         } catch (e) {
             throw e
