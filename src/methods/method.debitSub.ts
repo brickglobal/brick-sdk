@@ -16,6 +16,7 @@ export const debitSub = (params: any): { name: string, query: string } => {
                             updatedAt
                             createdAt
                             txid
+                            currentBalance
                             data{
                                 ... on InternalTxData{
                                   sender{

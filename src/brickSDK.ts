@@ -8,7 +8,7 @@ import { creditSub } from "./methods/method.creditSub";
 import { requestWithdrawSub } from "./methods/method.requestWithdrawSub";
 import { transactionsGet } from "./methods/method.transactionsGet";
 import { getMainAccInfo } from "./methods/method.getMainAccInfo";
-import {subAccountInfo} from "./methods/method.subAccountInfo"
+import { subAccountInfo } from "./methods/method.subAccountInfo"
 
 export const BMErrorCode = {
     PARAM_INVALID: `PARAM_INVALID`,
@@ -142,6 +142,7 @@ export type Transaction = {
     updatedAt: Date
     createdAt: Date
     fee: number
+    currentBalance: number
 }
 type MasterFee = {
     deposit: number
