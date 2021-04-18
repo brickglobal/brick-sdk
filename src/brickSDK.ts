@@ -292,7 +292,7 @@ class BrickSDK {
      * @param action 
      * @returns Transaction Type 
      */
-    public async debitSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'convert' | 'transfer' | 'cancel'): Promise<Transaction> {
+    public async debitSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'convert' | 'transfer' | 'cancel' | string): Promise<Transaction> {
         try {
             // if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
             // if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
@@ -315,7 +315,7 @@ class BrickSDK {
      * @param action 
      * @returns Transaction Type 
      */
-    public async creditSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'transfer' | 'convert' | 'cancel'): Promise<Transaction> {
+    public async creditSubAcc(uuid: string, username: string, amount: number, asset: 'eur' | 'trx' | 'usdt_trc20', action: 'bonus' | 'debit' | 'credit' | 'transfer' | 'convert' | 'cancel' | string): Promise<Transaction> {
         try {
             // if (!username) throw new Error(BMErrorCode.PARAM_MISSING)
             // if (!asset) throw new Error(BMErrorCode.PARAM_MISSING)
