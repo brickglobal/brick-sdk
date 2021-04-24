@@ -16,20 +16,24 @@ export const getMainAccInfo = (params: any): { name: string, query: string } => 
                         apiKey
                         fee {
                             deposit {
-                            ... on FeeVersion1 {
+                            ... on FeeVersion2 {
                                 version
                                 data {
                                 a
                                 b
+                                c
+                                min
                                 }
                             }
                             }
                             withdraw {
-                            ... on FeeVersion1 {
+                            ... on FeeVersion2 {
                                 version
                                 data {
                                 a
                                 b
+                                c
+                                min
                                 }
                             }
                             }

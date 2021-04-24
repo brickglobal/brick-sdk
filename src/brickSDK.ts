@@ -176,9 +176,16 @@ type FeeVersion1Data = {
     b: number
 }
 
+type FeeVersion2Data = {
+    a: number
+    b: number
+    c: number
+    min: number
+}
+
 type FeeVersion1 = {
     version: number
-    data: FeeVersion1Data
+    data: FeeVersion2Data
 }
 
 type MainAccountFee = {

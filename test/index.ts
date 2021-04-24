@@ -7,10 +7,10 @@ const brickInstance = new BrickSDK({ apiKey: "BKY5MXQ-3H3M8YG-JHA063H-TRSJNRP", 
 const test = async () => {
     const username="lalamama123"
     // console.log(await brickInstance.SubAccRequestWithDraw("fakeWithdrawUUID", "testSubAcc", 1000000, 'usdt_trc20', "TJYM3W22TYpvpnAHNgT7UsG6AekJcxTkkU"))
-    // console.log(await brickInstance.MainAccountInfoGet())
-    console.log(await brickInstance.debitSubAcc(uuidv4(),username,10000000,"eur","debit"))
-    console.log(await brickInstance.debitSubAcc(uuidv4(),username,10000000,"eur","debit"))
-    console.log(await brickInstance.creditSubAcc(uuidv4(),username,10000000,"eur","credit"))
+    console.log(await (await brickInstance.MainAccountInfoGet()).fee)
+    // console.log(await brickInstance.debitSubAcc(uuidv4(),username,10000000,"eur","debit"))
+    // console.log(await brickInstance.debitSubAcc(uuidv4(),username,10000000,"eur","debit"))
+    // console.log(await brickInstance.creditSubAcc(uuidv4(),username,10000000,"eur","credit"))
     // console.log(await brickInstance.subAccountInfoGet(username))
 }
 
