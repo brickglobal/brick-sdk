@@ -144,7 +144,7 @@ export type Transaction = {
     fee: number
     currentBalance: number
 }
-type MasterFee = {
+export type MasterFee = {
     deposit: number
     withdraw: number
 }
@@ -188,7 +188,7 @@ type FeeVersion1 = {
     data: FeeVersion2Data
 }
 
-type MainAccountFee = {
+export type MainAccountFee = {
     deposit: FeeVersion1
     withdraw: FeeVersion1
 }
