@@ -38,9 +38,11 @@ export const getMainAccInfo = (params: any): { name: string, query: string } => 
                             }
                             }
                         }
-                        masterFee {
-                            deposit
-                            withdraw
+                        masterSettings {
+                            depositMin
+                            withdrawMin
+                            depositFee
+                            withdrawFee
                         }
                         asset {
                             trx {

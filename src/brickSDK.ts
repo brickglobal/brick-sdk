@@ -144,9 +144,11 @@ export type Transaction = {
     fee: number
     currentBalance: number
 }
-export type MasterFee = {
-    deposit: number
-    withdraw: number
+export type MasterSettings = {
+    depositMin: number
+    withdrawMin: number
+    depositFee: number
+    withdrawFee: number
 }
 
 type MainDeposit = {
@@ -206,7 +208,7 @@ export type MainAccount = {
     deposit: AllMainDeposit
     withdraw: AllMainWithdraw
     fee: MainAccountFee
-    masterFee: MasterFee
+    masterSettings: MasterSettings
 }
 
 class BrickSDK {
