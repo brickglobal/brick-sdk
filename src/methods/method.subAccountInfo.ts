@@ -5,7 +5,7 @@ export const subAccountInfo = (params: any): { name: string, query: string } => 
         name: BMApolloMethodName.subAccountInfo,
         query: `
         query{
-            ${BMApolloMethodName.subAccountInfo}(username:"${params.username}"){
+            ${BMApolloMethodName.subAccountInfo}(username:"${params.username}" ${params.options ? `options:"${params.options}"` : ``}){
                 username
                 slug
                 type

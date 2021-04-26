@@ -211,6 +211,11 @@ export type MainAccount = {
     masterSettings: MasterSettings
 }
 
+export enum ReadPreference {
+    primary,
+    secondary
+}
+
 class BrickSDK {
 
     private _apiKey: string
@@ -380,7 +385,7 @@ class BrickSDK {
         }
     }
 
-    public async subAccountInfoGet(username: String): Promise<SubAccount> {
+    public async subAccountInfoGet(username: String, options?: ReadPreference): Promise<SubAccount> {
         try {
             let res = await this.GetData(BMMethodType.subAccountInfo, { username }) as SubAccount
             return res
