@@ -8,7 +8,8 @@ import { creditSub } from "./methods/method.creditSub";
 import { requestWithdrawSub } from "./methods/method.requestWithdrawSub";
 import { transactionsGet } from "./methods/method.transactionsGet";
 import { getMainAccInfo } from "./methods/method.getMainAccInfo";
-import { subAccountInfo } from "./methods/method.subAccountInfo"
+import { subAccountInfo } from "./methods/method.subAccountInfo";
+import { recheckTx } from "./methods/method.recheckTx"
 
 export const BMErrorCode = {
     PARAM_INVALID: `PARAM_INVALID`,
@@ -24,7 +25,8 @@ const BMMethodType = {
     requestWithdrawSub: `requestWithdrawSub`,
     transactionsGet: `transactionsGet`,
     getMainAccInfo: `getMainAccInfo`,
-    subAccountInfo: `subAccountInfo`
+    subAccountInfo: `subAccountInfo`,
+    recheckTx: `recheckTx`
 }
 
 export const BMApolloMethodName = {
@@ -34,7 +36,8 @@ export const BMApolloMethodName = {
     requestWithdrawSub: `sdk_sub_account_request_withdraw`,
     transactionsGet: `master_main_transactions_get`,
     getMainAccInfo: `sdk_main_account_get`,
-    subAccountInfo: `sdk_sub_account_get`
+    subAccountInfo: `sdk_sub_account_get`,
+    recheckTx: `sdk_admin_recheck`
 }
 
 export const BMMethodFUnc = {
@@ -44,7 +47,8 @@ export const BMMethodFUnc = {
     requestWithdrawSub,
     transactionsGet,
     getMainAccInfo,
-    subAccountInfo
+    subAccountInfo,
+    recheckTx
 }
 
 const AssetType = ['usdt_trc20', 'trx', 'eur']
@@ -216,6 +220,11 @@ export enum ReadPreference {
     secondary
 }
 
+export type RecheckResult = {
+    txid: string
+    status: string
+}
+
 class BrickSDK {
 
     private _apiKey: string
@@ -261,6 +270,10 @@ class BrickSDK {
                 case BMMethodType.subAccountInfo:
                     methodName = BMMethodFUnc.subAccountInfo(params).name
                     query = BMMethodFUnc.subAccountInfo(params).query
+                    break;
+                case BMMethodType.recheckTx:
+                    methodName = BMMethodFUnc.recheckTx(params).name
+                    query = BMMethodFUnc.recheckTx(params).query
                     break;
                 default:
                     break;
@@ -388,6 +401,15 @@ class BrickSDK {
     public async subAccountInfoGet(username: String, options?: ReadPreference): Promise<SubAccount> {
         try {
             let res = await this.GetData(BMMethodType.subAccountInfo, { username }) as SubAccount
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+
+    public async recheckTx(uuid: String): Promise<RecheckResult> {
+        try {
+            let res = await this.GetData(BMMethodType.recheckTx, { uuid }) as RecheckResult
             return res
         } catch (e) {
             throw e
