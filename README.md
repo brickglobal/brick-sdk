@@ -399,6 +399,29 @@ const getAccInfoRes= await brickSDK.MainAccountInfoGet()
     }
 */
 ```
+####  `recheckTx`
+Using to check status of one Transaction in blockchain
+__Params__
+```javascript
+uuid: string
+```
+__Return__
+```javascript
+{
+    txid: string
+    status: string
+}
+```
+__Example__
+```javascript
+const recheckTxRes = await brickSDK.recheckTx("testTxId")
+/*Success return example
+    recheckTxRes{
+        txid: "testTxId"
+        status: "success"
+    }
+*/
+```
 ## Error 
 There are two type of error that will be response
 * SDK error
@@ -414,6 +437,11 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+__1.1.16__
+* improve creditSubAcc, debitSubAcc, SubAccRequestWithDraw make sure amount roundown before send request to Brick Master server
+
+__1.1.15__
+* add new method `recheckTxRes`
 
 __1.1.2__
 * fix some bugs

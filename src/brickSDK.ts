@@ -327,7 +327,8 @@ class BrickSDK {
             // if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(BMMethodType.debitSub, { uuid, username, amount, asset, action }) as Transaction
+            let amountRoundDown = Math.floor(amount)
+            let res = await this.GetData(BMMethodType.debitSub, { uuid, username, amount:amountRoundDown, asset, action }) as Transaction
             return res
         } catch (e) {
             throw e
@@ -350,7 +351,8 @@ class BrickSDK {
             // if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
-            let res = await this.GetData(BMMethodType.creditSub, { uuid, username, amount, asset, action }) as Transaction
+            let amountRoundDown = Math.floor(amount)
+            let res = await this.GetData(BMMethodType.creditSub, { uuid, username, amount:amountRoundDown, asset, action }) as Transaction
             return res
         } catch (e) {
             throw e
@@ -372,7 +374,8 @@ class BrickSDK {
             // if (!usernameRegex.test(username)) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!(typeof amount === `number`) || amount < 0) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
-            let res = await this.GetData(BMMethodType.requestWithdrawSub, { uuid, username, amount, asset, receiver }) as Transaction
+            let amountRoundDown = Math.floor(amount)
+            let res = await this.GetData(BMMethodType.requestWithdrawSub, { uuid, username, amount: amountRoundDown, asset, receiver }) as Transaction
             return res
         } catch (e) {
             throw e
