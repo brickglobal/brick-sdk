@@ -40,7 +40,7 @@ const brickSDK = new BrickSDK({
 })
 ```
 ## Methods
-There are total 65 methods:
+There are total 6 methods:
 
 1. createSubAcc
 2. debitSubAcc
@@ -504,7 +504,7 @@ This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
 
-__1.1.18__
+__1.1.19__
 * add new method `subAccountInfo`
 
 __1.1.16__
