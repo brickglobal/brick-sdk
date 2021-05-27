@@ -40,12 +40,14 @@ const brickSDK = new BrickSDK({
 })
 ```
 ## Methods
-There are total 7 methods:
+There are total 65 methods:
 
 1. createSubAcc
 2. debitSubAcc
 3. SubAccRequestWithDraw
 4. MainAccountInfoGet
+5. recheckTx
+6. subAccountInfo
 ####  `1. createSubAcc`
 Using to create sub account
 __Params__
@@ -103,7 +105,7 @@ const createRes= await brickSDK.createSubAcc("testSubAcc")
     }
 */
 ```
-####  `debitSubAcc`
+####  `2. debitSubAcc`
 Using to request debit
 __Params__
 ```javascript
@@ -156,7 +158,7 @@ const debitRes= await brickSDK.debitSubAcc("fakeDebitUUID","testSubAcc",1000000,
     }
 */
 ```
-####  `creditSubAcc`
+####  `3. creditSubAcc`
 Using to request credit
 __Params__
 ```javascript
@@ -209,7 +211,7 @@ const creditRes= await brickSDK.creditSubAcc("fakeCreditUUID","testSubAcc",10000
     }
 */
 ```
-####  `SubAccRequestWithDraw`
+####  `4. SubAccRequestWithDraw`
 using to request withdraw
 __Params__
 ```javascript
@@ -262,7 +264,7 @@ const withdrawRes= await brickSDK.SubAccRequestWithDraw("fakeCreditUUID","testSu
     }
 */
 ```
-####  `MainAccountInfoGet`
+####  `5. MainAccountInfoGet`
 Using to get main account information
 __Params__
 ```javascript
@@ -406,7 +408,7 @@ const getAccInfoRes= await brickSDK.MainAccountInfoGet()
     }
 */
 ```
-####  `recheckTx`
+####  `6. recheckTx`
 Using to check status of one Transaction in blockchain
 __Params__
 ```javascript
@@ -429,6 +431,63 @@ const recheckTxRes = await brickSDK.recheckTx("testTxId")
     }
 */
 ```
+####  `7. subAccountInfo`
+Using to get infomation of subAccount
+__Params__
+```javascript
+username: string
+```
+__Return__
+```javascript
+{
+    username: string
+    slug: string
+    type: string
+    main: string
+    lock: string
+    asset: {
+        eur: number
+        trx: {
+            balance: number
+            address: string
+        }
+        usdt_trc20: {
+            balance: number
+            address: string
+        }
+    }
+    deposit: {
+        eur: number
+        trx: number
+        usdt_trc20: number
+    }
+    withdraw:{
+        eur: number
+        trx: number
+        usdt_trc20: number
+    }
+}
+```
+__Example__
+```javascript
+const subAccountInfoRes = await brickSDK.subAccountInfo("testSubAcc")
+/*Success return example
+   {
+        username: 'testSubAcc',
+        slug: 'testsubacc',
+        type: 'sub',
+        main: 'testMainAcc',
+        lock: 'none',
+        asset: {
+            eur: 0,
+            trx: { balance: 0, address: 'TR4jDigUp6JK7mF7UhBfju9*******' },
+            usdt_trc20: { balance: 0, address: 'TR4jDigUp6JK7mF7UhBfju9*******' }
+        },
+        deposit: { eur: 0, trx: 0, usdt_trc20: 0 },
+        withdraw: { eur: 0, trx: 0, usdt_trc20: 0 }
+    }
+*/
+```
 ## Error 
 There are two type of error that will be response
 * SDK error
@@ -444,8 +503,12 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+
+__1.1.18__
+* add new method `subAccountInfo`
+
 __1.1.16__
-* improve creditSubAcc, debitSubAcc, SubAccRequestWithDraw make sure amount roundown before send request to Brick Master server
+* improve `creditSubAcc`, `debitSubAcc`, `SubAccRequestWithDraw` make sure amount roundown before send request to Brick Master server
 
 __1.1.15__
 * add new method `recheckTxRes`
