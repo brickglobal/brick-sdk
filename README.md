@@ -10,6 +10,8 @@ A JavaScript SDK for interact with Brick Master server
 - Create sub account 
 - Debit / Credit / RequestWithdraw for sub account
 - Check main account information
+- Check sub account information
+- recheck TransactionID
 - Support `TRC20`
 
 ## Installation
@@ -38,8 +40,13 @@ const brickSDK = new BrickSDK({
 })
 ```
 ## Methods
-There are total 4 methods:
-####  `createSubAcc`
+There are total 7 methods:
+
+1. createSubAcc
+2. debitSubAcc
+3. SubAccRequestWithDraw
+4. MainAccountInfoGet
+####  `1. createSubAcc`
 Using to create sub account
 __Params__
 ```javascript
