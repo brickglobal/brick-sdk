@@ -1,4 +1,13 @@
 import { BrickSDK } from "./brickSDK";
-import { MainAccount, RecheckResponse, SubAccount, Transaction } from "./type";
+import { MainAccount, RecheckResponse, SubAccount, Transaction, AllAccountBalanceResponse, MasterSettings, MainAccountFee } from "./type";
 
-export { BrickSDK, Transaction, SubAccount, MainAccount, RecheckResponse }
+export {
+    BrickSDK,
+    SubAccount, 
+    MainAccount, 
+    Transaction, 
+    MainAccountFee, 
+    MasterSettings, 
+    RecheckResponse, 
+    AllAccountBalanceResponse
+}
