@@ -1,6 +1,6 @@
-import { BMApolloMethodName } from "../brickSDK"
+import { BMApolloMethodName } from "."
 
-export const creatSub = (params: { username: string }): { name: string, query: string } => {
+export const createSub = (params: { username: string }): { name: string, query: string } => {
     return {
         name: BMApolloMethodName.creatSub,
         query: `mutation {

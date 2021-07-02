@@ -40,14 +40,16 @@ const brickSDK = new BrickSDK({
 })
 ```
 ## Methods
-There are total 6 methods:
+There are total 8 methods:
 
 1. createSubAcc
 2. debitSubAcc
-3. SubAccRequestWithDraw
-4. MainAccountInfoGet
-5. recheckTx
-6. subAccountInfo
+3. creditSubAcc
+4. SubAccRequestWithDraw
+5. MainAccountInfoGet
+6. recheckTx
+7. subAccountInfo
+8. getAllAccountBalance
 ####  `1. createSubAcc`
 Using to create sub account
 __Params__
@@ -488,6 +490,29 @@ const subAccountInfoRes = await brickSDK.subAccountInfo("testSubAcc")
     }
 */
 ```
+####  `8. getAllAccountBalance`
+Using to get balance of all subAccount 
+__Params__
+```javascript
+// no prams required
+```
+__Return__
+```javascript
+{
+    eur:number,
+    usdt_trc20:number,
+}
+```
+__Example__
+```javascript
+const getAllAccountBalanceRes = await brickSDK.getAllAccountBalance()
+/*Success return example
+    {
+        eur:number,
+        usdt_trc20:number,
+    }
+*/
+```
 ## Error 
 There are two type of error that will be response
 * SDK error
@@ -503,6 +528,10 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+
+__1.1.20__
+* fix wrong Date type
+* add new method `getAllAccountBalance`
 
 __1.1.19__
 * add new method `subAccountInfo`

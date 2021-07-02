@@ -1,4 +1,4 @@
-import { BMApolloMethodName } from "../brickSDK"
+import { BMApolloMethodName } from "."
 
 export const requestWithdrawSub = (params: any): { name: string, query: string } => {
     return {

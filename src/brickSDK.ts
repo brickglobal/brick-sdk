@@ -1,228 +1,20 @@
 
-import { usernameRegex } from "./utils";
-
 import axios from "axios";
-import { creatSub } from "./methods/method.creatSub";
-import { debitSub } from "./methods/method.debitSub";
-import { creditSub } from "./methods/method.creditSub";
-import { requestWithdrawSub } from "./methods/method.requestWithdrawSub";
-import { transactionsGet } from "./methods/method.transactionsGet";
-import { getMainAccInfo } from "./methods/method.getMainAccInfo";
-import { subAccountInfo } from "./methods/method.subAccountInfo";
-import { recheckTx } from "./methods/method.recheckTx"
+import { fixDateType, getMethodNameAndQuery } from "./utils";
+import { AllAccountBalanceResponse, RecheckResponse } from "./type/MethodResponses";
+import { Transaction } from "./type/Transaction"
+import { SubAccount } from "./type/SubAccount";
+import { MainAccount } from "./type/MainAccount";
+import { BMMethodType } from "./methods";
+import { BMErrorCode } from "./errorCode";
 
-export const BMErrorCode = {
-    PARAM_INVALID: `PARAM_INVALID`,
-    PARAM_MISSING: `PARAM_MISSING`,
-    API_KEY_MISSING: `API_KEY_MISSING`,
-    PROVIDER_MISSING: `PROVIDER_MISSING`
-}
-
-const BMMethodType = {
-    creatSub: `createSub`,
-    debitSub: `debitSub`,
-    creditSub: `creditSub`,
-    requestWithdrawSub: `requestWithdrawSub`,
-    transactionsGet: `transactionsGet`,
-    getMainAccInfo: `getMainAccInfo`,
-    subAccountInfo: `subAccountInfo`,
-    recheckTx: `recheckTx`
-}
-
-export const BMApolloMethodName = {
-    creatSub: `sdk_sub_account_create`,
-    debitSub: `sdk_sub_account_debit`,
-    creditSub: `sdk_sub_account_credit`,
-    requestWithdrawSub: `sdk_sub_account_request_withdraw`,
-    transactionsGet: `master_main_transactions_get`,
-    getMainAccInfo: `sdk_main_account_get`,
-    subAccountInfo: `sdk_sub_account_get`,
-    recheckTx: `sdk_admin_recheck`
-}
-
-export const BMMethodFUnc = {
-    creatSub,
-    debitSub,
-    creditSub,
-    requestWithdrawSub,
-    transactionsGet,
-    getMainAccInfo,
-    subAccountInfo,
-    recheckTx
-}
 
 const AssetType = ['usdt_trc20', 'trx', 'eur']
-export const ActionType = {
-    bonus: 'bonus',
-    debit: 'debit',
-    credit: 'credit',
-    transfer: 'transfer',
-    convert: 'convert',
-    withdraw: 'withdraw',
-    deposit: 'deposit',
-    cancel: 'cancel'
-}
 
-export type Asset = {
-    balance: number
-    address: string
-}
-
-export type AllAsset = {
-    eur: number
-    trx: Asset
-    usdt_trc20: Asset
-}
-
-export type AllSubCashier = {
-    eur: number
-    trx: number
-    usdt_trc20: number
-}
-
-export type SubAccount = {
-    username: string
-    slug: string
-    type: string
-    main: string
-    lock: string
-    asset: AllAsset
-    deposit: AllSubCashier
-    withdraw: AllSubCashier
-}
-
-export enum TransactionSystem {
-    internal = 'internal',
-    external = 'external',
-}
-export enum TransactionStatus {
-    sent = 'sent',
-    completed = 'completed'
-}
-export enum TransactionType {
-    debit = 'debit',
-    credit = 'credit',
-    deposit = 'deposit',
-    withdraw = 'withdraw'
-}
-
-export type InternalAccount = {
-    _id: string
-    slug: string
-}
-
-export type ExternalAccount = {
-    address: string
-}
-
-export type InternalTxData = {
-    sender: InternalAccount
-    receiver: InternalAccount
-}
-
-export type ExternalDepositTxData = {
-    sender: ExternalAccount
-    receiver: InternalAccount
-}
-
-export type ExternalWithdrawTxData = {
-    sender: InternalAccount
-    receiver: ExternalAccount
-}
-
-export type TransactionData = InternalTxData | ExternalDepositTxData | ExternalWithdrawTxData
-
-export type Transaction = {
-    _id?: string
-    uuid: string
-    system: TransactionSystem
-    type: TransactionType
-    status: TransactionStatus
-    amount: number
-    asset: string
-    action: string
-    data: TransactionData
-    txid: string
-    updatedAt: Date
-    createdAt: Date
-    fee: number
-    currentBalance: number
-}
-export type MasterSettings = {
-    depositMin: number
-    withdrawMin: number
-    depositFee: number
-    withdrawFee: number
-}
-
-type MainDeposit = {
-    totalDeposit: number
-    mainDeposit: number
-    subsDeposit: number
-}
-
-type MainWithdraw = {
-    totalWithdraw: number
-    mainWithdraw: number
-    subsWithdraw: number
-}
-
-type AllMainDeposit = {
-    trx: MainDeposit
-    usdt_trc20: MainDeposit
-}
-
-type AllMainWithdraw = {
-    trx: MainWithdraw
-    usdt_trc20: MainWithdraw
-}
-
-type FeeVersion1Data = {
-    a: number
-    b: number
-}
-
-type FeeVersion2Data = {
-    a: number
-    b: number
-    c: number
-    min: number
-}
-
-type FeeVersion1 = {
-    version: number
-    data: FeeVersion2Data
-}
-
-export type MainAccountFee = {
-    deposit: FeeVersion1
-    withdraw: FeeVersion1
-}
-
-export type MainAccount = {
-    username: String
-    slug: String
-    type: String
-    lock: String
-    email: String
-    emailVerifiedAt: Date
-    twoFa: Boolean
-    apiKey: String
-    asset: AllAsset
-    deposit: AllMainDeposit
-    withdraw: AllMainWithdraw
-    fee: MainAccountFee
-    masterSettings: MasterSettings
-}
 
 export enum ReadPreference {
     primary,
     secondary
-}
-
-export type RecheckResult = {
-    txid: string
-    status: string
 }
 
 class BrickSDK {
@@ -238,46 +30,9 @@ class BrickSDK {
         this._provider = params.provider
     }
 
-    private async GetData(type, params: any) {
+    private async GetData(type: string, params: any) {
         try {
-            let methodName: string = ``
-            let query: string = ``
-            switch (type) {
-                case BMMethodType.creatSub:
-                    methodName = BMMethodFUnc.creatSub(params).name
-                    query = BMMethodFUnc.creatSub(params).query
-                    break;
-                case BMMethodType.creditSub:
-                    methodName = BMMethodFUnc.creditSub(params).name
-                    query = BMMethodFUnc.creditSub(params).query
-                    break;
-                case BMMethodType.debitSub:
-                    methodName = BMMethodFUnc.debitSub(params).name
-                    query = BMMethodFUnc.debitSub(params).query
-                    break;
-                case BMMethodType.requestWithdrawSub:
-                    methodName = BMMethodFUnc.requestWithdrawSub(params).name
-                    query = BMMethodFUnc.requestWithdrawSub(params).query
-                    break;
-                case BMMethodType.transactionsGet:
-                    methodName = BMMethodFUnc.transactionsGet(params).name
-                    query = BMMethodFUnc.transactionsGet(params).query
-                    break;
-                case BMMethodType.getMainAccInfo:
-                    methodName = BMMethodFUnc.getMainAccInfo(params).name
-                    query = BMMethodFUnc.getMainAccInfo(params).query
-                    break;
-                case BMMethodType.subAccountInfo:
-                    methodName = BMMethodFUnc.subAccountInfo(params).name
-                    query = BMMethodFUnc.subAccountInfo(params).query
-                    break;
-                case BMMethodType.recheckTx:
-                    methodName = BMMethodFUnc.recheckTx(params).name
-                    query = BMMethodFUnc.recheckTx(params).query
-                    break;
-                default:
-                    break;
-            }
+            let { methodName, query } = getMethodNameAndQuery(type, params)
             const res = await axios({
                 method: 'POST',
                 url: this._provider,
@@ -290,7 +45,9 @@ class BrickSDK {
             if (data.errors) {
                 throw data.errors[0]
             }
-            return data.data[methodName]
+            const result = data.data[methodName]
+            fixDateType(result)
+            return result
         } catch (e) {
             throw new Error(e.message)
         }
@@ -328,7 +85,7 @@ class BrickSDK {
             // if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
             let amountRoundDown = Math.floor(amount)
-            let res = await this.GetData(BMMethodType.debitSub, { uuid, username, amount:amountRoundDown, asset, action }) as Transaction
+            let res = await this.GetData(BMMethodType.debitSub, { uuid, username, amount: amountRoundDown, asset, action }) as Transaction
             return res
         } catch (e) {
             throw e
@@ -352,7 +109,7 @@ class BrickSDK {
             // if (!AssetType.includes(asset)) throw new Error(BMErrorCode.PARAM_INVALID)
             // if (!Object.values(ActionType).includes(action)) throw new Error(ErrorCode.PARAM_INVALID)
             let amountRoundDown = Math.floor(amount)
-            let res = await this.GetData(BMMethodType.creditSub, { uuid, username, amount:amountRoundDown, asset, action }) as Transaction
+            let res = await this.GetData(BMMethodType.creditSub, { uuid, username, amount: amountRoundDown, asset, action }) as Transaction
             return res
         } catch (e) {
             throw e
@@ -403,16 +160,26 @@ class BrickSDK {
 
     public async subAccountInfoGet(username: String, options?: ReadPreference): Promise<SubAccount> {
         try {
-            let res = await this.GetData(BMMethodType.subAccountInfo, { username }) as SubAccount
+            let res = await this.GetData(BMMethodType.subAccountInfo, { username, options }) as SubAccount
             return res
         } catch (e) {
             throw e
         }
     }
 
-    public async recheckTx(uuid: String): Promise<RecheckResult> {
+    public async recheckTx(uuid: String): Promise<RecheckResponse> {
         try {
-            let res = await this.GetData(BMMethodType.recheckTx, { uuid }) as RecheckResult
+            let res = await this.GetData(BMMethodType.recheckTx, { uuid }) as RecheckResponse
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+
+    public async getAllAccountBalance(): Promise<AllAccountBalanceResponse> {
+        try {
+            let res = await this.GetData(BMMethodType.getAllAccountBalance, {}) as AllAccountBalanceResponse
+
             return res
         } catch (e) {
             throw e
