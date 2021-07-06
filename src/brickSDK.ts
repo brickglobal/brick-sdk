@@ -13,8 +13,8 @@ const AssetType = ['usdt_trc20', 'trx', 'eur']
 
 
 export enum ReadPreference {
-    primary,
-    secondary
+    primary = "primary",
+    secondary = "secondary"
 }
 
 class BrickSDK {
@@ -158,7 +158,7 @@ class BrickSDK {
         }
     }
 
-    public async subAccountInfoGet(username: String, options?: ReadPreference): Promise<SubAccount> {
+    public async subAccountInfoGet(username: String, options: ReadPreference = ReadPreference.secondary): Promise<SubAccount> {
         try {
             let res = await this.GetData(BMMethodType.subAccountInfo, { username, options }) as SubAccount
             return res

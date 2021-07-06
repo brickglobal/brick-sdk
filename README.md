@@ -529,6 +529,9 @@ This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
 
+__1.1.22__
+* fix `subAccountInfo` cannot trigger
+
 __1.1.21__
 * update return type
 
