@@ -7,6 +7,7 @@ import { SubAccount } from "./type/SubAccount";
 import { MainAccount } from "./type/MainAccount";
 import { BMMethodType } from "./methods";
 import { BMErrorCode } from "./errorCode";
+import { LogCustomerDetail } from "./type";
 
 
 const AssetType = ['usdt_trc20', 'trx', 'eur']
@@ -48,8 +49,8 @@ class BrickSDK {
             const result = data.data[methodName]
             fixDateType(result)
             return result
-        } catch (e) {
-            throw e
+        } catch (e: any) {
+            throw new Error(e.message)
         }
     }
     /**
@@ -179,12 +180,70 @@ class BrickSDK {
     public async getAllAccountBalance(): Promise<AllAccountBalanceResponse> {
         try {
             let res = await this.GetData(BMMethodType.getAllAccountBalance, {}) as AllAccountBalanceResponse
-
             return res
         } catch (e) {
             throw e
         }
     }
+    /**
+     * 
+     * @param customer_id id of customer
+     * @param asset_id id of asset that Brick support
+     * @param amount amount of withdraw (multiple with 1.10^6)
+     * @param address withdraw to the address
+     * @returns 
+     */
+    public async customerWithdraw(customer_id: String, asset_id: Number, amount: Number, address: String): Promise<LogCustomerDetail> {
+        try {
+            let res = await this.GetData(BMMethodType.customerWithdraw, {customer_id, asset_id, amount, address}) as LogCustomerDetail
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+    /**
+     * 
+     * @param sender_id 
+     * @param receiver_id 
+     * @param asset_id 
+     * @param receiver_enterprise_id 
+     * @param amount 
+     * @returns 
+     */
+    public async customerTransfer(sender_id: String, receiver_id:String, asset_id: Number, receiver_enterprise_id: String, amount: Number): Promise<LogCustomerDetail> {
+        try {
+            let res = await this.GetData(BMMethodType.customerTransfer, {sender_id, receiver_id, asset_id, receiver_enterprise_id, amount}) as LogCustomerDetail
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+    /**
+     * 
+     * @param sender_id 
+     * @param receiver_id 
+     * @param asset_id 
+     * @param receiver_enterprise_id 
+     * @param amount 
+     * @returns 
+     */
+    public async customerExchange(customer_id: string, from_asset_id: number, to_asset_id: number, from_amount: number, to_amount: number): Promise<LogCustomerDetail> {
+        try {
+            let res = await this.GetData(BMMethodType.customerExchange, {customer_id, from_asset_id, to_asset_id, from_amount, to_amount}) as LogCustomerDetail
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+    public async customerChangeBalance(customer_id: string, asset_id: number, amount: number): Promise<LogCustomerDetail> {
+        try {
+            let res = await this.GetData(BMMethodType.customerChangeBalance, {customer_id, asset_id, amount}) as LogCustomerDetail
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+
     public async userBalanceGet(customer_id: String): Promise<UserBalanceGet> {
         try {
             let res = await this.GetData(BMMethodType.userBalanceGet, { customer_id }) as UserBalanceGet
