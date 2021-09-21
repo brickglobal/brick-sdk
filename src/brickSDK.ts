@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import { fixDateType, getMethodNameAndQuery } from "./utils";
-import { AllAccountBalanceResponse, RecheckResponse } from "./type/MethodResponses";
+import { AllAccountBalanceResponse, RecheckResponse, UserBalanceGet } from "./type/MethodResponses";
 import { Transaction } from "./type/Transaction"
 import { SubAccount } from "./type/SubAccount";
 import { MainAccount } from "./type/MainAccount";
@@ -49,7 +49,7 @@ class BrickSDK {
             fixDateType(result)
             return result
         } catch (e) {
-            throw new Error(e.message)
+            throw e
         }
     }
     /**
@@ -180,6 +180,14 @@ class BrickSDK {
         try {
             let res = await this.GetData(BMMethodType.getAllAccountBalance, {}) as AllAccountBalanceResponse
 
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+    public async userBalanceGet(customer_id: String): Promise<UserBalanceGet> {
+        try {
+            let res = await this.GetData(BMMethodType.userBalanceGet, { customer_id }) as UserBalanceGet
             return res
         } catch (e) {
             throw e

@@ -7,6 +7,7 @@ import { recheckTx } from "./method.recheckTx";
 import { requestWithdrawSub } from "./method.requestWithdrawSub";
 import { subAccountInfo } from "./method.subAccountInfo";
 import { transactionsGet } from "./method.transactionsGet";
+import { userBalanceGet } from "./method.userBalanceGet";
 
 
 export const BMMethodFUnc = {
@@ -18,7 +19,8 @@ export const BMMethodFUnc = {
     getMainAccInfo,
     subAccountInfo,
     recheckTx,
-    getAllAccountBalance
+    getAllAccountBalance,
+    userBalanceGet,
 }
 
 export const BMMethodType = {
@@ -31,6 +33,7 @@ export const BMMethodType = {
     subAccountInfo: `subAccountInfo`,
     recheckTx: `recheckTx`,
     getAllAccountBalance: `getAllAccountBalance`,
+    userBalanceGet: `UserBalanceGet`,
 }
 
 export const BMApolloMethodName = {
@@ -42,5 +45,6 @@ export const BMApolloMethodName = {
     getMainAccInfo: `sdk_main_account_get`,
     subAccountInfo: `sdk_sub_account_get`,
     recheckTx: `sdk_admin_recheck`,
-    getAllAccountBalance: `sdk_main_account_subs_balance_get`
+    getAllAccountBalance: `sdk_main_account_subs_balance_get`,
+    userBalanceGet: `sdk_user_balance_get`,
 }

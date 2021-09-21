@@ -59,6 +59,10 @@ export const getMethodNameAndQuery = (type: string, params: any) => {
             methodName = BMMethodFUnc.getAllAccountBalance(params).name
             query = BMMethodFUnc.getAllAccountBalance(params).query
             break;
+        case BMMethodType.userBalanceGet:
+            methodName = BMMethodFUnc.userBalanceGet(params).name
+            query = BMMethodFUnc.userBalanceGet(params).query
+            break;
         default:
             break;
     }
