@@ -546,6 +546,12 @@ __Params__
 | Parameter  | Description  | Data Type |
 | :------------ |:---------------:| -----:|
 | customer_id |id of customer|string|
+
+```javascript
+{
+    customer_id: String
+}
+```
 __Return__
 ```javascript
 {
@@ -578,6 +584,17 @@ __Params__
 |address |receiver address|(optional) Hex string|
 |action |major|(optional) string|
 
+```javascript
+{
+    customer_id: String,
+    asset_id: Number,
+    amount: Number,
+    req_id: String,
+    req_time: Number,
+    address?: String,
+    action?: String
+}
+```
 __Return__
 ```javascript
 {
