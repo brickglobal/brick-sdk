@@ -1,9 +1,9 @@
 import { createSub } from "./method.createSub";
 import { creditSub } from "./method.creditSub";
-import { customerChangeBalance } from "./method.customerChangeBalance";
-import { customerExchange } from "./method.customerExchange";
-import { customerTransfer } from "./method.customerTransfer";
-import { customerWithdraw } from "./method.customerWithdraw";
+import { customerChangeBalance } from "./method.v2.customerChangeBalance";
+import { customerExchange } from "./method.v2.customerExchange";
+import { customerTransfer } from "./method.v2.customerTransfer";
+import { customerWithdraw } from "./method.v2.customerWithdraw";
 import { debitSub } from "./method.debitSub";
 import { getAllAccountBalance } from "./method.getAllAccountBalance";
 import { getMainAccInfo } from "./method.getMainAccInfo";
@@ -11,7 +11,8 @@ import { recheckTx } from "./method.recheckTx";
 import { requestWithdrawSub } from "./method.requestWithdrawSub";
 import { subAccountInfo } from "./method.subAccountInfo";
 import { transactionsGet } from "./method.transactionsGet";
-import { userBalanceGet } from "./method.userBalanceGet";
+import { userBalanceGet } from "./method.v2.userBalanceGet";
+import { enterpriseAddressGet } from "./method.v2.enterpriseAddressGet";
 
 
 export const BMMethodFUnc = {
@@ -28,7 +29,8 @@ export const BMMethodFUnc = {
     customerWithdraw,
     customerTransfer,
     customerExchange,
-    customerChangeBalance
+    customerChangeBalance,
+    enterpriseAddressGet,
 }
 
 export const BMMethodType = {
@@ -46,6 +48,7 @@ export const BMMethodType = {
     customerTransfer: `customerTransfer`,
     customerExchange: `customerExchange`,
     customerChangeBalance: `customerChangeBalance`,
+    enterpriseAddressGet: `enterpriseAddressGet`
 }
 
 export const BMApolloMethodName = {
@@ -63,4 +66,5 @@ export const BMApolloMethodName = {
     customerTransfer: `sdk_customer_transfer`,
     customerExchange: `sdk_customer_exchange`,
     customerChangeBalance: `sdk_customer_change_balance`,
+    enterpriseAddressGet: `sdk_enterprise_asset_address_get`
 }

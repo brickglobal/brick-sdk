@@ -79,6 +79,10 @@ export const getMethodNameAndQuery = (type: string, params: any) => {
             methodName = BMMethodFUnc.userBalanceGet(params).name
             query = BMMethodFUnc.userBalanceGet(params).query
             break;
+        case BMMethodType.enterpriseAddressGet:
+            methodName = BMMethodFUnc.enterpriseAddressGet(params).name
+            query = BMMethodFUnc.enterpriseAddressGet(params).query
+            break;
         default:
             break;
     }

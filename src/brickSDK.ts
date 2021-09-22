@@ -187,15 +187,18 @@ class BrickSDK {
     }
     /**
      * 
-     * @param customer_id id of customer
-     * @param asset_id id of asset that Brick support
-     * @param amount amount of withdraw (multiple with 1.10^6)
+     * @param customer_id Id of customer
+     * @param asset_id Id of asset
+     * @param amount Amount of withdraw (multiple with 1.10^6)
+     * @param req_id 
+     * @param req_time 
      * @param address withdraw to the address
-     * @returns 
+     * @param action 
+     * @returns LogCustomerDetail
      */
-    public async customerWithdraw(customer_id: String, asset_id: Number, amount: Number, address: String): Promise<LogCustomerDetail> {
+    private async customerWithdraw(customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, address?: String, action?: String): Promise<LogCustomerDetail> {
         try {
-            let res = await this.GetData(BMMethodType.customerWithdraw, {customer_id, asset_id, amount, address}) as LogCustomerDetail
+            let res = await this.GetData(BMMethodType.customerWithdraw, {customer_id, asset_id, amount, req_id, req_time, address, action}) as LogCustomerDetail
             return res
         } catch (e) {
             throw e
@@ -203,54 +206,86 @@ class BrickSDK {
     }
     /**
      * 
-     * @param sender_id 
-     * @param receiver_id 
-     * @param asset_id 
-     * @param receiver_enterprise_id 
-     * @param amount 
-     * @returns 
+     * @param sender_id From address of transfer
+     * @param receiver_id To address of transfer
+     * @param asset_id Id of asset
+     * @param amount Amount of transfer (multiple with 1.10^6)
+     * @param req_id 
+     * @param req_time 
+     * @param receiver_enterprise_id Id of enterprise receiver (optional)
+     * @param action 
+     * @returns LogCustomerDetail
      */
-    public async customerTransfer(sender_id: String, receiver_id:String, asset_id: Number, receiver_enterprise_id: String, amount: Number): Promise<LogCustomerDetail> {
-        try {
-            let res = await this.GetData(BMMethodType.customerTransfer, {sender_id, receiver_id, asset_id, receiver_enterprise_id, amount}) as LogCustomerDetail
-            return res
-        } catch (e) {
-            throw e
-        }
+    private async customerTransfer(sender_id: String,receiver_id:String,asset_id: Number,amount: Number,req_id: String,req_time: Number,receiver_enterprise_id?: String,action?: String): Promise<LogCustomerDetail> {
+            try {
+                let res = await this.GetData(BMMethodType.customerTransfer, {sender_id, receiver_id, asset_id, receiver_enterprise_id, amount, req_id, req_time, action}) as LogCustomerDetail
+                return res
+            } catch (e) {
+                throw e
+            }
     }
     /**
      * 
-     * @param sender_id 
-     * @param receiver_id 
-     * @param asset_id 
-     * @param receiver_enterprise_id 
-     * @param amount 
-     * @returns 
+     * @param customer_id Id of customer
+     * @param from_asset_id From id of asset
+     * @param to_asset_id To id of asset
+     * @param from_amount From amount of exchange (multiple with 1.10^6)
+     * @param to_amount To amount of exchange (multiple with 1.10^6)
+     * @param req_id 
+     * @param req_time 
+     * @param action 
+     * @returns LogCustomerDetail
      */
-    public async customerExchange(customer_id: string, from_asset_id: number, to_asset_id: number, from_amount: number, to_amount: number): Promise<LogCustomerDetail> {
-        try {
-            let res = await this.GetData(BMMethodType.customerExchange, {customer_id, from_asset_id, to_asset_id, from_amount, to_amount}) as LogCustomerDetail
-            return res
-        } catch (e) {
-            throw e
-        }
+    private async customerExchange(customer_id: String,from_asset_id: Number,to_asset_id: Number,from_amount: Number,to_amount: Number,req_id: String,req_time: Number,action?: String): Promise<LogCustomerDetail> {
+            try {
+                let res = await this.GetData(BMMethodType.customerExchange, {customer_id, from_asset_id, to_asset_id, from_amount, to_amount, req_id, req_time, action}) as LogCustomerDetail
+                return res
+            } catch (e) {
+                throw e
+            }
     }
-    public async customerChangeBalance(customer_id: string, asset_id: number, amount: number): Promise<LogCustomerDetail> {
+    /**
+     * 
+     * @param customer_id Id of customer
+     * @param asset_id Id of asset
+     * @param amount Amount of debit/credit (multiple with 1.10^6)
+     * @param req_id 
+     * @param req_time 
+     * @param action 
+     * @returns LogCustomerDetail
+     */
+    private async customerChangeBalance(customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, action?: String): Promise<LogCustomerDetail> {
         try {
-            let res = await this.GetData(BMMethodType.customerChangeBalance, {customer_id, asset_id, amount}) as LogCustomerDetail
+            let res = await this.GetData(BMMethodType.customerChangeBalance, {customer_id, asset_id, amount, req_id, req_time, action}) as LogCustomerDetail
             return res
         } catch (e) {
             throw e
         }
     }
 
-    public async userBalanceGet(customer_id: String): Promise<UserBalanceGet> {
+    private async userBalanceGet(customer_id: String): Promise<UserBalanceGet> {
         try {
             let res = await this.GetData(BMMethodType.userBalanceGet, { customer_id }) as UserBalanceGet
             return res
         } catch (e) {
             throw e
         }
+    }
+    private async enterpriseAddressGet(asset_id: Number): Promise<String> {
+        try {
+            let res = await this.GetData(BMMethodType.enterpriseAddressGet, { asset_id }) as String
+            return res
+        } catch (e) {
+            throw e
+        }
+    }
+    public v2 = {
+        customerWithdraw: (customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, address?: String, action?: String) => this.customerWithdraw(customer_id, asset_id, amount, req_id, req_time, address, action),
+        customerExchange: (customer_id: String,from_asset_id: Number,to_asset_id: Number,from_amount: Number,to_amount: Number,req_id: String,req_time: Number,action?: String) => this.customerExchange(customer_id,from_asset_id,to_asset_id,from_amount,to_amount,req_id,req_time,action),
+        customerChangeBalance: (customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, action?: String) => this.customerChangeBalance(customer_id, asset_id, amount, req_id, req_time, action),
+        customerTransfer: (sender_id: String,receiver_id:String,asset_id: Number,amount: Number,req_id: String,req_time: Number,receiver_enterprise_id?: String,action?: String) => this.customerTransfer(sender_id, receiver_id, asset_id, amount, req_id, req_time,receiver_enterprise_id, action),
+        userBalanceGet: (customer_id: String) => this.userBalanceGet(customer_id),
+        enterpriseAddressGet: (asset_id: Number) => this.enterpriseAddressGet(asset_id),
     }
 }
 
