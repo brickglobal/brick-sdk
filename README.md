@@ -876,25 +876,7 @@ __Example__
 ```javascript
 const data = await brickSDKv2.enterpriseAddressGet("asset_id_example")
 /*Success return example
-    {
-  "data": {
-    "sdk_customer_change_balance": {
-      "_id": "614b12ec48ae090012b331ca",
-      "req_id": "req_id_example",
-      "ref_id": "5b16bf8b-5a80-4f49-83f2-9db8ba1de0ae",
-      "req_time": "2021-09-22T04:04:13.575Z",
-      "customer_id": "customer_id_example",
-      "enterprise_id": "example_enterprise",
-      "asset_id": 0,
-      "amount": 10000000,
-      "fee_enterprise": 0,
-      "txid": null,
-      "create_date": "2021-09-22T11:26:36.752Z",
-      "status": 0,
-      "action": "action_example"
-    }
-  }
-}
+> TKVSaJQDWeKFSEXmA44pjxdu***GTxyXa***
 */
 ```
 ## Error 
