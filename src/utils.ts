@@ -59,6 +59,30 @@ export const getMethodNameAndQuery = (type: string, params: any) => {
             methodName = BMMethodFUnc.getAllAccountBalance(params).name
             query = BMMethodFUnc.getAllAccountBalance(params).query
             break;
+        case BMMethodType.customerWithdraw:
+            methodName = BMMethodFUnc.customerWithdraw(params).name
+            query = BMMethodFUnc.customerWithdraw(params).query
+            break;
+        case BMMethodType.customerTransfer:
+            methodName = BMMethodFUnc.customerTransfer(params).name
+            query = BMMethodFUnc.customerTransfer(params).query
+            break;
+        case BMMethodType.customerExchange:
+            methodName = BMMethodFUnc.customerExchange(params).name
+            query = BMMethodFUnc.customerExchange(params).query
+            break;
+        case BMMethodType.customerChangeBalance:
+            methodName = BMMethodFUnc.customerChangeBalance(params).name
+            query = BMMethodFUnc.customerChangeBalance(params).query
+            break;
+        case BMMethodType.customerBalanceGet:
+            methodName = BMMethodFUnc.customerBalanceGet(params).name
+            query = BMMethodFUnc.customerBalanceGet(params).query
+            break;
+        case BMMethodType.enterpriseAddressGet:
+            methodName = BMMethodFUnc.enterpriseAddressGet(params).name
+            query = BMMethodFUnc.enterpriseAddressGet(params).query
+            break;
         default:
             break;
     }

@@ -1,7 +1,8 @@
 import { MainAccount,MasterSettings,MainAccountFee } from "./MainAccount"
 import { SubAccount } from "./SubAccount"
 import { Transaction } from "./Transaction"
-import { RecheckResponse, AllAccountBalanceResponse } from "./MethodResponses"
+import { RecheckResponse, AllAccountBalanceResponse, CustomerBalanceGet } from "./MethodResponses"
+import { LogCustomerDetail } from "./LogCustomerDetail"
 
 export {
     MainAccount,
@@ -10,5 +11,7 @@ export {
     RecheckResponse,
     AllAccountBalanceResponse,
     MasterSettings,
-    MainAccountFee
+    MainAccountFee,
+    CustomerBalanceGet,
+    LogCustomerDetail,
 }

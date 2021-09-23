@@ -8,3 +8,8 @@ export type AllAccountBalanceResponse = {
     usdt_trc20: number
 }
 
+export type CustomerBalanceGet = {
+    asset_id: number
+    balance: number
+}
+
