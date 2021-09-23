@@ -9,7 +9,6 @@ export const customerTransfer = (params: {
   req_time: number,
   action?: string,
 }): { name: string; query: string } => {
-  console.log(params)
   return {
     name: BMApolloMethodName.customerTransfer,
     query: `mutation{
@@ -17,11 +16,11 @@ export const customerTransfer = (params: {
             sender_id: "${params.sender_id}"
             receiver_id: "${params.receiver_id}"
             asset_id: ${params.asset_id}
-            receiver_enterprise_id:"${params.receiver_enterprise_id}"
+            ${params.receiver_enterprise_id?`receiver_enterprise_id: "${params.receiver_enterprise_id}"`: ""}
             amount: ${params.amount}
             req_id: "${params.req_id}"
             req_time: ${params.req_time}
-            ${params.action?`action: ${params.action}`: ""}
+            ${params.action?`action: "${params.action}"`: ""}
         ) {
           _id
           req_id

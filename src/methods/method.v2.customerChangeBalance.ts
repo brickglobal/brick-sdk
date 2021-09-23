@@ -10,7 +10,7 @@ export const customerChangeBalance = (params: {customer_id: string, asset_id: nu
             amount: ${params.amount}
             req_id: "${params.req_id}"
             req_time: ${params.req_time}
-            ${params.action?`action: ${params.action}`: ""}
+            ${params.action?`action: "${params.action}"`: ""}
         ) {
           _id
           req_id

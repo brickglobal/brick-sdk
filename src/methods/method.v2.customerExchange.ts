@@ -19,9 +19,9 @@ export const customerExchange = (params: {
             to_asset_id: ${params.to_asset_id}
             from_amount: ${params.from_amount}
             to_amount: ${params.to_amount}
-            req_id: "${params.req_id}",
+            req_id: "${params.req_id}"
             req_time: ${params.req_time}
-            ${params.action?`action: ${params.action}`: ""}
+            ${params.action ? `action: "${params.action}"` : ``}
         ) {
           _id
           req_id
