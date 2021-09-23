@@ -591,8 +591,7 @@ __Params__
     amount: Number,
     req_id: String,
     req_time: Number,
-    address?: String,
-    action?: String
+    address?: String
 }
 ```
 __Return__
@@ -821,7 +820,7 @@ __Params__
 |amount|change balance amount|number (interger and must be != 0)|
 |req_id|request id|string unique|
 |req_time|send request time|timestamp in miliseconds|
-|action |major|(optional) string|
+|action |major|string|
 
 ```javascript
 {
@@ -830,7 +829,7 @@ __Params__
     amount: Number,
     req_id: String,
     req_time: Number,
-    action?: String
+    action: String
 }
 ```
 __Return__
@@ -912,6 +911,10 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+__2.0.2__
+
+* Leave `action` of method `customerWithdraw`
+* `action` of method `customerChangeBalance` require
 
 __2.0.1__
 

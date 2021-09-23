@@ -1,6 +1,6 @@
 import { BMApolloMethodName } from ".";
 
-export const customerWithdraw = (params: {customer_id: string, asset_id: number, amount: number, req_id: string, req_time: number, address?: string, action?: string}): { name: string; query: string } => {
+export const customerWithdraw = (params: {customer_id: string, asset_id: number, amount: number, req_id: string, req_time: number, address?: string}): { name: string; query: string } => {
   return {
     name: BMApolloMethodName.customerWithdraw,
     query: `mutation{
@@ -11,7 +11,6 @@ export const customerWithdraw = (params: {customer_id: string, asset_id: number,
           req_id: "${params.req_id}"
           req_time: ${params.req_time}
           ${params.address?`address: "${params.address}"`: ""}
-          ${params.action?`action: "${params.action}"`: ""}
         ) {
           _id
           req_id

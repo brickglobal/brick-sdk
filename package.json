@@ -1,6 +1,6 @@
 {
   "name": "@brickglobal/brick-sdk",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "dist/index.js",
   "files": [
     "dist"
