@@ -1,20 +1,22 @@
-import { BMMethodName } from "../brickSDK"
+import { BMApolloMethodName } from "."
 
 export const debitSub = (params: any): { name: string, query: string } => {
     return {
-        name: BMMethodName.debitSub,
+        name: BMApolloMethodName.debitSub,
         query: `
                     mutation{
-                        ${BMMethodName.debitSub}(uuid:"${params.uuid}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
+                        ${BMApolloMethodName.debitSub}(uuid:"${params.uuid}",action:"${params.action}",username:"${params.username}",asset:${params.asset},amount:${params.amount}){
                             uuid
                             system
                             type
                             amount
+                            fee
                             asset
                             action
                             updatedAt
                             createdAt
                             txid
+                            currentBalance
                             data{
                                 ... on InternalTxData{
                                   sender{

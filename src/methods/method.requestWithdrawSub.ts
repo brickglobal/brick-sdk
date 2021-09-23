@@ -1,15 +1,16 @@
-import { BMMethodName } from "../brickSDK"
+import { BMApolloMethodName } from "."
 
 export const requestWithdrawSub = (params: any): { name: string, query: string } => {
     return {
-        name: BMMethodName.requestWithdrawSub,
+        name: BMApolloMethodName.requestWithdrawSub,
         query: `
                     mutation{
-                        ${BMMethodName.requestWithdrawSub}(uuid:"${params.uuid}",username:"${params.username}",asset:${params.asset},amount:${params.amount},receiver:"${params.receiver}"){
+                        ${BMApolloMethodName.requestWithdrawSub}(uuid:"${params.uuid}",username:"${params.username}",asset:${params.asset},amount:${params.amount},receiver:"${params.receiver}"){
                             uuid
                             system
                             type
                             amount
+                            fee
                             asset
                             action
                             updatedAt
