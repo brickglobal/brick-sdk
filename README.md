@@ -582,7 +582,7 @@ __Params__
 |req_id|request id|string unique|
 |req_time|send request time|timestamp in miliseconds|
 |address |receiver address|(optional) Hex string|
-|action |major|(optional) string|
+
 
 ```javascript
 {
