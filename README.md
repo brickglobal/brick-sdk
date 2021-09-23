@@ -69,7 +69,7 @@ Version 1:
 8. getAllAccountBalance
 
 Version 2:
-9. userBalanceGet
+9. customerBalanceGet
 10. customerWithdraw
 11. customerTransfer
 12. customerExchange
@@ -539,7 +539,7 @@ const getAllAccountBalanceRes = await brickSDK.getAllAccountBalance()
     }
 */
 ```
-####  `9. userBalanceGet`
+####  `9. customerBalanceGet`
 Using to get balance of customer
 __Params__
 
@@ -561,7 +561,7 @@ __Return__
 ```
 __Example__
 ```javascript
-const getBalance = await brickSDKv2.userBalanceGet("user_id_example")
+const getBalance = await brickSDKv2.customerBalanceGet("user_id_example")
 /*Success return example
     [ 
         { 
@@ -650,6 +650,7 @@ __Params__
 |req_time|send request time|timestamp in miliseconds|
 |receiver_enterprise_id|id enterprise receiver|(optional) string|
 |action |major|(optional) string|
+
 ```javascript
 {
     sender_id: String,
@@ -915,7 +916,7 @@ Will be update soon ...
 __2.0.1__
 
 * integration with BrickMaster version 2
-* add new five methods: `userBalanceGet`, `customerWithdraw`, `customerTransfer`, `customerExchange`, `customerChangeBalance`, `enterpriseAddressGet`
+* add new five methods: `customerBalanceGet`, `customerWithdraw`, `customerTransfer`, `customerExchange`, `customerChangeBalance`, `enterpriseAddressGet`
 * export type: `LogCustomerDetail`
 
 __1.1.22__

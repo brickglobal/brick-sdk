@@ -11,7 +11,7 @@ import { recheckTx } from "./method.recheckTx";
 import { requestWithdrawSub } from "./method.requestWithdrawSub";
 import { subAccountInfo } from "./method.subAccountInfo";
 import { transactionsGet } from "./method.transactionsGet";
-import { userBalanceGet } from "./method.v2.userBalanceGet";
+import { customerBalanceGet } from "./method.v2.customerBalanceGet";
 import { enterpriseAddressGet } from "./method.v2.enterpriseAddressGet";
 
 
@@ -25,7 +25,7 @@ export const BMMethodFUnc = {
     subAccountInfo,
     recheckTx,
     getAllAccountBalance,
-    userBalanceGet,
+    customerBalanceGet,
     customerWithdraw,
     customerTransfer,
     customerExchange,
@@ -43,7 +43,7 @@ export const BMMethodType = {
     subAccountInfo: `subAccountInfo`,
     recheckTx: `recheckTx`,
     getAllAccountBalance: `getAllAccountBalance`,
-    userBalanceGet: `UserBalanceGet`,
+    customerBalanceGet: `customerBalanceGet`,
     customerWithdraw: `customerWithdraw`,
     customerTransfer: `customerTransfer`,
     customerExchange: `customerExchange`,
@@ -61,7 +61,7 @@ export const BMApolloMethodName = {
     subAccountInfo: `sdk_sub_account_get`,
     recheckTx: `sdk_admin_recheck`,
     getAllAccountBalance: `sdk_main_account_subs_balance_get`,
-    userBalanceGet: `sdk_user_balance_get`,
+    customerBalanceGet: `sdk_user_balance_get`,
     customerWithdraw: `sdk_customer_withdraw`,
     customerTransfer: `sdk_customer_transfer`,
     customerExchange: `sdk_customer_exchange`,

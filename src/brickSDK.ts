@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import { fixDateType, getMethodNameAndQuery } from "./utils";
-import { AllAccountBalanceResponse, RecheckResponse, UserBalanceGet } from "./type/MethodResponses";
+import { AllAccountBalanceResponse, CustomerBalanceGet, RecheckResponse } from "./type/MethodResponses";
 import { Transaction } from "./type/Transaction"
 import { SubAccount } from "./type/SubAccount";
 import { MainAccount } from "./type/MainAccount";
@@ -263,9 +263,9 @@ class BrickSDK {
         }
     }
 
-    private async userBalanceGet(customer_id: String): Promise<UserBalanceGet> {
+    private async customerBalanceGet(customer_id: String): Promise<CustomerBalanceGet> {
         try {
-            let res = await this.GetData(BMMethodType.userBalanceGet, { customer_id }) as UserBalanceGet
+            let res = await this.GetData(BMMethodType.customerBalanceGet, { customer_id }) as CustomerBalanceGet
             return res
         } catch (e) {
             throw e
@@ -284,7 +284,7 @@ class BrickSDK {
         customerExchange: (customer_id: String,from_asset_id: Number,to_asset_id: Number,from_amount: Number,to_amount: Number,req_id: String,req_time: Number,action?: String) => this.customerExchange(customer_id,from_asset_id,to_asset_id,from_amount,to_amount,req_id,req_time,action),
         customerChangeBalance: (customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, action?: String) => this.customerChangeBalance(customer_id, asset_id, amount, req_id, req_time, action),
         customerTransfer: (sender_id: String,receiver_id:String,asset_id: Number,amount: Number,req_id: String,req_time: Number,receiver_enterprise_id?: String,action?: String) => this.customerTransfer(sender_id, receiver_id, asset_id, amount, req_id, req_time,receiver_enterprise_id, action),
-        userBalanceGet: (customer_id: String) => this.userBalanceGet(customer_id),
+        customerBalanceGet: (customer_id: String) => this.customerBalanceGet(customer_id),
         enterpriseAddressGet: (asset_id: Number) => this.enterpriseAddressGet(asset_id),
     }
 }

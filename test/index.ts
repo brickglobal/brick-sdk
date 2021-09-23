@@ -14,9 +14,9 @@ import { fixDateType } from '../src/utils';
       // const data = await brickSDK.customerExchange("TKVSaJQDWeKFSEXmA44pjxduGTxyXa6B52",0,1, 10000000,10000000, "requestExchange",1632283453575,"exchange")
       // const data = await brickSDK.customerChangeBalance("TKVSaJQDWeKFSEXmA44pjxduGTxyXa6B52",0,10000000, "requestChange",1632283453575)
       // const data = await brickSDK.customerTransfer("TKVSaJQDWeKFSEXmA44pjxduGTxyXa6B52", "TVv3Xrj9rmo5BqBsXSwU3YsQKoVRhLuGtN",0,10000000, `tuan_${new Date().toString()}`,1632283453575, "nguyen_enterprise")
-      // const data = await brickSDK.userBalanceGet("TKVSaJQDWeKFSEXmA44pjxduGTxyXa6B52")
-      // const data = await brickSDK.v2.userBalanceGet("TKVSaJQDWeKFSEXmA44pjxduGTxyXa6B52")
-      const data = await brickSDK.v2.enterpriseAddressGet(0)
+      // const data = await brickSDK.customerBalanceGet("TKVSaJQDWeKFSEXmA44pjxduGTxyXa6B52")
+      const data = await brickSDK.v2.customerBalanceGet("TKVSaJQDWeKFSEXmA44pjxduGTxyXa6B52")
+      // const data = await brickSDK.v2.enterpriseAddressGet(0)
       console.timeEnd("xxxxx")
       console.log(data)
       
