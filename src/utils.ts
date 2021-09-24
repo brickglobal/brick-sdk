@@ -83,6 +83,10 @@ export const getMethodNameAndQuery = (type: string, params: any) => {
             methodName = BMMethodFUnc.enterpriseAddressGet(params).name
             query = BMMethodFUnc.enterpriseAddressGet(params).query
             break;
+        case BMMethodType.logCustomerHistoryGet:
+            methodName = BMMethodFUnc.logCustomerHistoryGet(params).name
+            query = BMMethodFUnc.logCustomerHistoryGet(params).query
+            break;
         default:
             break;
     }

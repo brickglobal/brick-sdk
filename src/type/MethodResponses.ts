@@ -1,3 +1,5 @@
+import { LogCustomerDetail } from "."
+
 export type RecheckResponse = {
     txid: string
     status: string
@@ -11,5 +13,9 @@ export type AllAccountBalanceResponse = {
 export type CustomerBalanceGet = {
     asset_id: number
     balance: number
+}
+export type LogHistoryResponse = {
+    data: [LogCustomerDetail]
+    totalItems: Number
 }
 

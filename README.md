@@ -22,6 +22,7 @@ A JavaScript SDK for interact with Brick Master server
 - Withdraw customer's assets
 - Change balance customer's asset
 - Transfer asset
+- Get transaction customer history
 
 ## Installation
 ### [Node.js](http://nodejs.org):
@@ -56,7 +57,7 @@ const brickSDKv2 = new BrickSDK({
 
 ```
 ## Methods
-There are total 14 methods:
+There are total 15 methods:
 
 Version 1:
 1. createSubAcc
@@ -75,6 +76,7 @@ Version 2:
 12. customerExchange
 13. customerChangeBalance
 14. enterpriseAddressGet
+15. logCustomerHistoryGet
 
 ####  `1. createSubAcc`
 Using to create sub account
@@ -896,6 +898,67 @@ const data = await brickSDKv2.enterpriseAddressGet("asset_id_example")
 > TKVSaJQDWeKFSEXmA44pjxdu***GTxyXa***
 */
 ```
+####  `15. logCustomerHistoryGet`
+Using to get transaction customer historyGet
+__Params__
+| Parameter  | Description  | Data Type |
+| :------------ |:---------------:| -----:|
+|customer_id|id of customer|string|
+|action|major|(optional) 'all' or null|
+|sort|sort data|(optional) 'newest' or 'oldest' or null|
+|pageNumber|number of page|(optional) interger number|
+|pageSize|size of a page|(optional) interger number|
+
+```javascript
+asset_id: String
+action?: 'all' | null
+sort?: 'newest' | 'oldest' | null
+pageNumber?: Number
+pageSize?: Number
+```
+__Return__
+```javascript
+{
+    data: {
+        _id: String
+        req_id: String
+        ref_id: String
+        customer_id: String
+        enterprise_id: String
+        asset_id: Number
+        amount: Number
+        fee_enterprise: Number
+        txid: String
+        req_time: Date
+        create_date: Date
+        status: Number
+        action: String
+    }[],
+    totalitems: Number
+}
+```
+__Example__
+```javascript
+const data = await brickSDKv2.logCustomerHistoryGet("customer_id_example", 'all', null, 2, 20)
+/*Success return example
+    data: {
+      _id: '614d347749d5d4001275cbbc',
+      req_id: '21',
+      ref_id: '6bfe1dec-7981-422b-ad77-4b2db7faf701',
+      customer_id: 'customer_id_example',
+      enterprise_id: 'example_enterprise',
+      amount: -2000,
+      fee_enterprise: 0,
+      txid: null,
+      create_date: '2021-09-24T02:14:15.268Z',
+      status: 0,
+      req_time: '2021-09-22T09:31:21.000Z',
+      action: 'exchange'
+    }[],
+    totalItems: 1324
+*/
+```
+
 ## Error 
 There are two type of error that will be response
 * SDK error
@@ -911,6 +974,11 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+
+__2.1.0__
+
+* add new method `logCustomerHistoryGet`
+
 __2.0.2__
 
 * Leave `action` of method `customerWithdraw`
