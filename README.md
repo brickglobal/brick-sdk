@@ -59,7 +59,8 @@ const brickSDKv2 = new BrickSDK({
 ## Methods
 There are total 15 methods:
 
-Version 1:
+##### Version 1:
+
 1. createSubAcc
 2. debitSubAcc
 3. creditSubAcc
@@ -69,7 +70,8 @@ Version 1:
 7. subAccountInfo
 8. getAllAccountBalance
 
-Version 2:
+##### Version 2:
+
 9. customerBalanceGet
 10. customerWithdraw
 11. customerTransfer
