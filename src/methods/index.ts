@@ -13,6 +13,7 @@ import { subAccountInfo } from "./method.subAccountInfo";
 import { transactionsGet } from "./method.transactionsGet";
 import { customerBalanceGet } from "./method.v2.customerBalanceGet";
 import { enterpriseAddressGet } from "./method.v2.enterpriseAddressGet";
+import { logCustomerHistoryGet } from "./method.v2.logCustomerHistoryGet";
 
 
 export const BMMethodFUnc = {
@@ -31,6 +32,7 @@ export const BMMethodFUnc = {
     customerExchange,
     customerChangeBalance,
     enterpriseAddressGet,
+    logCustomerHistoryGet,
 }
 
 export const BMMethodType = {
@@ -48,7 +50,8 @@ export const BMMethodType = {
     customerTransfer: `customerTransfer`,
     customerExchange: `customerExchange`,
     customerChangeBalance: `customerChangeBalance`,
-    enterpriseAddressGet: `enterpriseAddressGet`
+    enterpriseAddressGet: `enterpriseAddressGet`,
+    logCustomerHistoryGet: `logCustomerHistoryGet`,
 }
 
 export const BMApolloMethodName = {
@@ -66,5 +69,6 @@ export const BMApolloMethodName = {
     customerTransfer: `sdk_customer_transfer`,
     customerExchange: `sdk_customer_exchange`,
     customerChangeBalance: `sdk_customer_change_balance`,
-    enterpriseAddressGet: `sdk_enterprise_asset_address_get`
+    enterpriseAddressGet: `sdk_enterprise_asset_address_get`,
+    logCustomerHistoryGet: `sdk_user_log_customer_history_get`,
 }
