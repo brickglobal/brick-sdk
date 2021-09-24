@@ -887,7 +887,9 @@ __Params__
 |asset_id|id of asset|interger number|
 
 ```javascript
-asset_id: Number
+{
+    asset_id: Number
+}
 ```
 __Return__
 ```javascript
@@ -912,11 +914,13 @@ __Params__
 |pageSize|size of a page|(optional) interger number|
 
 ```javascript
-asset_id: String
-action?: 'all' | null
-sort?: 'newest' | 'oldest' | null
-pageNumber?: Number
-pageSize?: Number
+{
+    asset_id: String
+    action?: 'all' | null
+    sort?: 'newest' | 'oldest' | null
+    pageNumber?: Number
+    pageSize?: Number
+}
 ```
 __Return__
 ```javascript
