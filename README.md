@@ -981,6 +981,10 @@ This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
 
+__2.1.1__
+
+* fix return type of method `customerBalanceGet`
+
 __2.1.0__
 
 * add new method `logCustomerHistoryGet`

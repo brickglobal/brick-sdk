@@ -262,9 +262,9 @@ class BrickSDK {
         }
     }
 
-    private async customerBalanceGet(customer_id: String): Promise<CustomerBalanceGet> {
+    private async customerBalanceGet(customer_id: String): Promise<CustomerBalanceGet[]> {
         try {
-            let res = await this.GetData(BMMethodType.customerBalanceGet, { customer_id }) as CustomerBalanceGet
+            let res = await this.GetData(BMMethodType.customerBalanceGet, { customer_id }) as CustomerBalanceGet[]
             return res
         } catch (e) {
             throw e
