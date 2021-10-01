@@ -7,6 +7,7 @@ import { MainAccount } from "./type/MainAccount";
 import { BMMethodType } from "./methods";
 import { BMErrorCode } from "./errorCode";
 import { LogCustomerDetail } from "./type";
+import { ChangeBalanceOptions } from "./type/LogCustomerDetail";
 
 
 const AssetType = ['usdt_trc20', 'trx', 'eur']
@@ -197,7 +198,7 @@ class BrickSDK {
      */
     private async customerWithdraw(customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, address?: String): Promise<LogCustomerDetail> {
         try {
-            let res = await this.GetData(BMMethodType.customerWithdraw, {customer_id, asset_id, amount, req_id, req_time, address}) as LogCustomerDetail
+            let res = await this.GetData(BMMethodType.customerWithdraw, { customer_id, asset_id, amount, req_id, req_time, address }) as LogCustomerDetail
             return res
         } catch (e) {
             throw e
@@ -215,13 +216,13 @@ class BrickSDK {
      * @param action 
      * @returns LogCustomerDetail
      */
-    private async customerTransfer(sender_id: String,receiver_id:String,asset_id: Number,amount: Number,req_id: String,req_time: Number,receiver_enterprise_id?: String | null,action?: String | null): Promise<LogCustomerDetail> {
-            try {
-                let res = await this.GetData(BMMethodType.customerTransfer, {sender_id, receiver_id, asset_id, receiver_enterprise_id, amount, req_id, req_time, action}) as LogCustomerDetail
-                return res
-            } catch (e) {
-                throw e
-            }
+    private async customerTransfer(sender_id: String, receiver_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, receiver_enterprise_id?: String | null, action?: String | null): Promise<LogCustomerDetail> {
+        try {
+            let res = await this.GetData(BMMethodType.customerTransfer, { sender_id, receiver_id, asset_id, receiver_enterprise_id, amount, req_id, req_time, action }) as LogCustomerDetail
+            return res
+        } catch (e) {
+            throw e
+        }
     }
     /**
      * 
@@ -235,13 +236,13 @@ class BrickSDK {
      * @param action 
      * @returns LogCustomerDetail
      */
-    private async customerExchange(customer_id: String,from_asset_id: Number,to_asset_id: Number,from_amount: Number,to_amount: Number,req_id: String,req_time: Number,action?: String): Promise<LogCustomerDetail> {
-            try {
-                let res = await this.GetData(BMMethodType.customerExchange, {customer_id, from_asset_id, to_asset_id, from_amount, to_amount, req_id, req_time, action}) as LogCustomerDetail
-                return res
-            } catch (e) {
-                throw e
-            }
+    private async customerExchange(customer_id: String, from_asset_id: Number, to_asset_id: Number, from_amount: Number, to_amount: Number, req_id: String, req_time: Number, action?: String): Promise<LogCustomerDetail> {
+        try {
+            let res = await this.GetData(BMMethodType.customerExchange, { customer_id, from_asset_id, to_asset_id, from_amount, to_amount, req_id, req_time, action }) as LogCustomerDetail
+            return res
+        } catch (e) {
+            throw e
+        }
     }
     /**
      * 
@@ -253,9 +254,9 @@ class BrickSDK {
      * @param action 
      * @returns LogCustomerDetail
      */
-    private async customerChangeBalance(customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, action: String): Promise<LogCustomerDetail> {
+    private async customerChangeBalance(customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, action: String, options?: ChangeBalanceOptions): Promise<LogCustomerDetail> {
         try {
-            let res = await this.GetData(BMMethodType.customerChangeBalance, {customer_id, asset_id, amount, req_id, req_time, action}) as LogCustomerDetail
+            let res = await this.GetData(BMMethodType.customerChangeBalance, { customer_id, asset_id, amount, req_id, req_time, action, options }) as LogCustomerDetail
             return res
         } catch (e) {
             throw e
@@ -288,9 +289,9 @@ class BrickSDK {
     }
     public v2 = {
         customerWithdraw: (customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, address?: String) => this.customerWithdraw(customer_id, asset_id, amount, req_id, req_time, address),
-        customerExchange: (customer_id: String,from_asset_id: Number,to_asset_id: Number,from_amount: Number,to_amount: Number,req_id: String,req_time: Number,action?: String) => this.customerExchange(customer_id,from_asset_id,to_asset_id,from_amount,to_amount,req_id,req_time,action),
-        customerChangeBalance: (customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, action: String) => this.customerChangeBalance(customer_id, asset_id, amount, req_id, req_time, action),
-        customerTransfer: (sender_id: String,receiver_id:String,asset_id: Number,amount: Number,req_id: String,req_time: Number,receiver_enterprise_id?: String|null,action?: String|null) => this.customerTransfer(sender_id, receiver_id, asset_id, amount, req_id, req_time,receiver_enterprise_id, action),
+        customerExchange: (customer_id: String, from_asset_id: Number, to_asset_id: Number, from_amount: Number, to_amount: Number, req_id: String, req_time: Number, action?: String) => this.customerExchange(customer_id, from_asset_id, to_asset_id, from_amount, to_amount, req_id, req_time, action),
+        customerChangeBalance: (customer_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, action: String, options?: ChangeBalanceOptions) => this.customerChangeBalance(customer_id, asset_id, amount, req_id, req_time, action, options),
+        customerTransfer: (sender_id: String, receiver_id: String, asset_id: Number, amount: Number, req_id: String, req_time: Number, receiver_enterprise_id?: String | null, action?: String | null) => this.customerTransfer(sender_id, receiver_id, asset_id, amount, req_id, req_time, receiver_enterprise_id, action),
         customerBalanceGet: (customer_id: String) => this.customerBalanceGet(customer_id),
         enterpriseAddressGet: (asset_id: Number) => this.enterpriseAddressGet(asset_id),
         logCustomerHistoryGet: (customer_id: String, action?: "all" | null, sort?: "newest" | "oldest" | null, pageNumber?: Number | null, pageSize?: Number | null) => this.logCustomerHistoryGet(customer_id, action, sort, pageNumber, pageSize),

@@ -823,8 +823,9 @@ __Params__
 |asset_id|id of asset|interger number|
 |amount|change balance amount|number (interger and must be != 0)|
 |req_id|request id|string unique|
-|req_time|send request time|timestamp in miliseconds|
+|req_time|send request time|timestamp in milliseconds|
 |action |major|string|
+|options |object| optional - require_amount (balance of user must be greater than require_amount) - number |
 
 ```javascript
 {
@@ -833,7 +834,10 @@ __Params__
     amount: Number,
     req_id: String,
     req_time: Number,
-    action: String
+    action: String,
+    options?:{
+        require_amount?:Number
+    }
 }
 ```
 __Return__
@@ -980,6 +984,10 @@ __Server response error__
 This errors will start with `BM:` as prefix
 Will be update soon ...
 ## Recent History
+
+__2.1.2__
+
+* add `options` params to method `customerChangeBalance`
 
 __2.1.1__
 

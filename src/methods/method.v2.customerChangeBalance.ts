@@ -1,6 +1,7 @@
 import { BMApolloMethodName } from ".";
+import { ChangeBalanceOptions } from "../type/LogCustomerDetail";
 
-export const customerChangeBalance = (params: {customer_id: string, asset_id: number, amount: number, req_id: string, req_time: number, action: string}): { name: string; query: string } => {
+export const customerChangeBalance = (params: { customer_id: string, asset_id: number, amount: number, req_id: string, req_time: number, action: string, options?: ChangeBalanceOptions }): { name: string; query: string } => {
   return {
     name: BMApolloMethodName.customerChangeBalance,
     query: `mutation{
@@ -11,6 +12,10 @@ export const customerChangeBalance = (params: {customer_id: string, asset_id: nu
             req_id: "${params.req_id}"
             req_time: ${params.req_time}
             action: "${params.action}"
+            ${params.options?.require_amount ?
+            `options:{
+              require_amount:${params.options.require_amount}
+            }`: ""}
         ) {
           _id
           req_id

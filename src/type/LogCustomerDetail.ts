@@ -13,3 +13,7 @@ export type LogCustomerDetail = {
   status: Number
   action: String
 }
+
+export type ChangeBalanceOptions = {
+  require_amount?: Number
+}
